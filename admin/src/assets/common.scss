@@ -1,0 +1,90 @@
+$bar-color: #27b3e7;
+html, body, 
+div, 
+header, section, article, footer, nav, aside, figure, hgroup, 
+h1, h2, h3, h4, h5, h6, p, 
+menu, ul, ol, li, dl, dt, dd, 
+img, a, small, strong, em, b, i, span, label, legend, hr, br, fieldset, sub, sup {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+header, section, article, footer, nav, aside, figure, hgroup{
+	display: block;
+} 
+li{
+    list-style: none;
+}
+/*重置饿了么UI样式*/
+.el-row:after, .el-row:before {
+	clear: both;
+}
+.el-table .cell {
+	text-align: left;
+}
+.el-button--small {
+	background:$bar-color;
+}
+.el-upload {
+	width:100%;
+	max-width:360px;
+}
+.el-dragger {
+	width:100%;
+}
+.el-form-item__title {
+	font-size: 14px;
+    color: #48576a;
+    line-height: 1;
+    padding: 11px 12px 11px 0;
+}
+.ql-snow .ql-picker-label::before {
+	
+}
+.tr {
+	text-align: right;
+}
+.tl {
+	text-align: left;
+}
+.f-w100 {
+	width:100% !important;
+}
+.f-bg-blue {
+	background:$bar-color;
+	color:#fff;
+}
+.f-mt-0 {
+	margin-top:0 !important;
+}
+.m-title {
+	text-align:left;
+	font-size:24px;
+	padding:10px 0 20px;
+	border-bottom:1px solid #eee;
+	margin-bottom:20px;
+}
+/*文章列表模块*/
+
+/*媒体查询*/
+
+@media (max-width:475px){
+	.el-form-item__label{
+		text-align: left;
+	}
+	.el-form-item__content {
+		margin-left:0 !important;
+	}
+	.el-select {
+		margin-top:20px;
+	}
+	.el-breadcrumb:after, .el-breadcrumb:before, 
+		.el-form-item:after, .el-form-item:before, 
+		.el-form-item__content:after, .el-form-item__content:before{
+			clear:both;
+	}
+	.el-form-item {
+		margin-bottom:0;
+	}
+}
