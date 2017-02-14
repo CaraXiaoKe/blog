@@ -34,9 +34,10 @@
 				<option value="justify"></option>
 			</select>
 			<button class="ql-link" type="button">Link</button>
-			<button class="ql-img-upload" type="button">
+			<button class="ql-img-upload" type="button" @click="triggerFile">
 				<svg viewBox="0 0 18 18"> <rect class="ql-stroke" height="10" width="12" x="3" y="4"></rect> <circle class="ql-fill" cx="6" cy="7" r="1"></circle> <polyline class="ql-even ql-fill" points="5 12 5 11 7 9 8 10 11 7 13 9 13 12 5 12"></polyline> </svg>
 			</button>
+			<input v-loading.fullscreen.lock="fullscreenLoading" ref="quillimg" type="file" class="quill-upload" @change="selectFile($event)"/>
 		</div>
 		<div id="editor">
 		  	
@@ -51,7 +52,8 @@
 		data(){
 			return {
 				quill:null,
-				num:this.quillContent
+				num:this.quillContent,
+				fullscreenLoading:false
 			}
 		},
 		watch:{
@@ -68,6 +70,35 @@
 			    theme: 'snow',
 			    placeholder: 'Compose an epic...',
 	  		});
+		},
+		methods:{
+			selectFile(e){
+				this.fullscreenLoading = true;
+				let that = this;
+				let index =  this.quill.getSelection() ? this.quill.getSelection().index : 0;
+				let file = this.$refs.quillimg.files[0];
+				let submitData = new FormData();
+			   	submitData.append("file", file);
+			   	let xhr = new XMLHttpRequest();  
+		        xhr.open('POST','/api/upload',true);  
+		        xhr.onload = function(event) {
+					if (xhr.status === 200) {
+						that.fullscreenLoading = false;
+						that.quill.insertEmbed(index, 'image', JSON.parse(this.response).url);
+					} else {
+						this.$message({
+                            message: '上传失败',
+                            type: 'warning',
+                            duration:1500
+                        });
+					}
+				};
+		        xhr.send(submitData);  
+			},
+			//解决火狐问题
+			triggerFile(){
+				this.$refs.quillimg.click();
+			}
 		}
 	}
 </script>
@@ -77,5 +108,20 @@
 	}
 	.ql-img-upload:focus {
 		    outline: none;
+	}
+	#editor {
+		min-height:200px;
+	}
+	.ql-img-upload {
+		position: relative;
+	}
+	.quill-upload {
+		display: none;
+		width:20px;
+		height:20px;
+		position: absolute;
+		top:3px;
+		left:3px;
+		opacity: 0;
 	}
 </style>

@@ -23,9 +23,11 @@
   				</el-form-item>
   				<el-form-item label="上传缩略图">
 				    <el-upload
-					  	action="//jsonplaceholder.typicode.com/posts/"
+					  	action="/api/upload"
 					  	type="drag"
 					  	:thumbnail-mode="true"
+					  	:on-remove="removeImage"
+					  	:on-success="successUpload"
 					  	:default-file-list="fileList">
 					  		<i class="el-icon-upload"></i>
 					  		<div class="el-dragger__text">将文件拖到此处，或<em>点击上传</em></div>
@@ -56,13 +58,13 @@ export default {
 		        post_title: '',
 		        post_classify_sup:'',
 		        post_classify_sub:'',
-		        post_content:null
+		        post_content:null,
+		        post_thumbnail:null
 	        },
 	        fieldTree:Object.freeze(classify_data),
 	        subTree:[],
 	        fieldHash:Object.freeze(hash),
 	        fileList: [
-	         	
 	        ]
      
       	}
@@ -78,14 +80,87 @@ export default {
     },
     methods:{
         addPost(){
-        	this.newPostForm.post_content = this.$refs.editor.quill.getContents().ops;
-        	this.$http.post('/api/article/add',this.newPostForm).then((res)=>{
-            	if(res.data.status == 1){
-            		alert("发送成功");
-            	}else{
-					alert("上传失败");
-            	};
-        	})
+        	if(this.validateForm()){
+        		this.newPostForm.post_content = this.$refs.editor.quill.getContents().ops;
+        		this.$http.post('/api/article/add',this.newPostForm).then((res)=>{
+	            	if(res.data.status == 1){
+	            		alert("发送成功");
+	            		this.newPostForm = {
+					        post_title: '',
+					        post_classify_sup:'',
+					        post_classify_sub:'',
+					        post_content:null,
+					        post_thumbnail:null
+				        };
+	            		this.fileList = [
+	        			];
+	        			this.$refs.editor.quill.setContents([{ insert: '' }])
+	            	}else{
+						alert("上传失败");
+	            	};
+        		})
+        	}
+        	
+        },
+        successUpload(res){
+        	this.fileList = [
+        		{
+        			name:res.key,
+        			url:res.url
+        		}
+        	];
+        	this.newPostForm.post_thumbnail = {
+        		name:res.key,
+        		url:res.url
+        	};
+        },
+        removeImage(){
+            this.newPostForm.post_thumbnail = null;
+            this.fileList = [];
+        },
+        validateForm(){
+        	let title = this.newPostForm.post_title.replace(/^\s+|\s+$/,'')
+        	if(title == ''){
+        		this.$message({
+		          	message: '文章名字不能为空！',
+		          	type: 'warning',
+		          	duration:1500
+		        });
+		        return false;
+        	};
+        	if(title.length > 40){
+        		this.$message({
+		          	message: '文章名字不能太长！',
+		          	type: 'warning',
+		          	duration:1500
+		        });
+		        return false;
+        	};
+        	if(this.$refs.editor.quill.getLength() == 1){
+        		this.$message({
+		          	message: '文章内容不能为空！',
+		          	type: 'warning',
+		          	duration:1500
+		        });
+		        return false;
+        	};
+        	if(this.newPostForm.post_classify_sub == ''){
+        		this.$message({
+		          	message: '请选择分类！',
+		          	type: 'warning',
+		          	duration:1500
+		        });
+		        return false;
+        	};	
+        	if(this.newPostForm.post_thumbnail == null){
+        		this.$message({
+		          	message: '请上传图片！',
+		          	type: 'warning',
+		          	duration:1500
+		        });
+		        return false;
+        	};	
+        	return true;
         }
     }
 }

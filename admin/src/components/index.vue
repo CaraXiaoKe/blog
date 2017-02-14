@@ -71,8 +71,9 @@ export default {
         formatterClass(row){
             return this.tableHash[row.post_classify_sup]+"-"+this.tableHash[row.post_classify_sub];
         },
-        formatterDate(){
-            return "2017-12-08";
+        formatterDate(row){
+            let date = new Date(row.post_created);
+            return date.getFullYear()+"-"+date.getMonth()+"-"+date.getDate();
         }
     }
 }

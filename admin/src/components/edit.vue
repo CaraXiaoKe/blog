@@ -24,9 +24,11 @@
                 </el-form-item>
                 <el-form-item label="上传缩略图">
                     <el-upload
-                        action="//jsonplaceholder.typicode.com/posts/"
+                        action="/api/upload"
                         type="drag"
                         :thumbnail-mode="true"
+                        :on-remove="removeImage"
+                        :on-success="successUpload"
                         :default-file-list="fileList">
                             <i class="el-icon-upload"></i>
                             <div class="el-dragger__text">将文件拖到此处，或<em>点击上传</em></div>
@@ -58,26 +60,32 @@ export default {
                 post_title: '',
                 post_classify_sup:'',
                 post_classify_sub:'',
-                post_content:null
+                post_content:null,
+                post_thumbnail:{}
             },
             article_id:this.$route.params.id,
             fieldTree:Object.freeze(classify_data),
             subTree:[],
             fieldHash:Object.freeze(hash),
-            fileList: [ 
-            ]
+            fileList: []
         }
     },
     mounted(){
+
         this.$http.get('/api/article/'+this.article_id).then((res)=>{
             if(res.data.status == 1){
                 let sub_id = res.data.info.post_classify_sub;
                 this.newPostForm = res.data.info;
+                this.fileList =  [this.newPostForm.post_thumbnail];
                 this.$nextTick(()=>{
                     this.newPostForm.post_classify_sub = sub_id;
                 })
             }else{
-                alert("获取列表失败");
+                this.$message({
+                    message: '获取列表失败',
+                    type: 'warning',
+                    duration:1500
+                });
             };
         })
     },
@@ -89,10 +97,82 @@ export default {
     },
     methods:{
         editPost(){
-            this.newPostForm.post_content = this.$refs.editor.quill.getContents().ops;
-            let posts = JSON.parse(window.sessionStorage.posts);
-            posts[0] = this.newPostForm;
-            window.sessionStorage.posts = JSON.stringify(posts);
+            if(this.validateForm()){
+                this.newPostForm.post_content = this.$refs.editor.quill.getContents().ops;
+                this.$http.post('/api/article/edit/'+this.$route.params.id,this.newPostForm).then((res)=>{
+                    if(res.data.status == 1){
+                        this.$message({
+                            message: '修改成功',
+                            type: 'success',
+                            duration:1500
+                        });
+                    }else{
+                        this.$message({
+                            message: '编辑失败',
+                            type: 'warning',
+                            duration:1500
+                        });
+                    };
+                })
+            }
+        },
+        successUpload(res){
+            this.fileList = [{
+                name:res.key,
+                url:res.url
+            }];
+            this.newPostForm.post_thumbnail = {
+                name:res.key,
+                url:res.url
+            };
+        },
+        removeImage(){
+            this.newPostForm.post_thumbnail = null;
+            this.fileList = [];
+        },
+        validateForm(){
+            let title = this.newPostForm.post_title.replace(/^\s+|\s+$/,'')
+            if(title == ''){
+                this.$message({
+                    message: '文章名字不能为空！',
+                    type: 'warning',
+                    duration:1500
+                });
+                return false;
+            };
+            if(title.length > 40){
+                this.$message({
+                    message: '文章名字不能太长！',
+                    type: 'warning',
+                    duration:1500
+                });
+                return false;
+            };
+            if(this.$refs.editor.quill.getLength() == 1){
+                this.$message({
+                    message: '文章内容不能为空！',
+                    type: 'warning',
+                    duration:1500
+                });
+                return false;
+            };
+            if(this.newPostForm.post_classify_sub == ''){
+                this.$message({
+                    message: '请选择分类！',
+                    type: 'warning',
+                    duration:1500
+                });
+                return false;
+            };  
+            if(this.newPostForm.post_thumbnail == null){
+                this.$message({
+                    message: '请上传图片！',
+                    type: 'warning',
+                    duration:1500
+                });
+                return false;
+            };  
+            return true;
         }
     }
 }

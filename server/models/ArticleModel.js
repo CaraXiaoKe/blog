@@ -5,44 +5,16 @@ const ArticleSchema = new Schema({
     post_title: String,
     post_classify_sup:Number,
     post_classify_sub:Number,
-    post_content:{}
+    post_content:{},
+    post_thumbnail:{},
+    post_created: { type: Number, default: Date.now },
 });
 
 const ArticleModel = mongoose.model('Article', ArticleSchema);
-
-class Article {
+const BaseModel = require('./BaseModel');
+class Article extends BaseModel {
     constructor() {
-
-    }
-    save(condition,callback){
-    	new ArticleModel(condition).save(function(err,collection){
-    		if(err){
-    			console.log(err);
-    			callback(err);
-    			return;
-    		};
-    		callback(null,collection);
-    	})
-    }
-    find(condition,callback){
-    	ArticleModel.find(condition||{},function(err,collections){
-    		if(err){
-    			console.log(err);
-    			callback(err);
-    			return;
-    		};
-    		callback(null,collections);
-    	})
-    }
-    findById(id,callback){
-    	ArticleModel.findById(id,function(err,collection){
-    		if(err){
-    			console.log(err);
-    			callback(err);
-    			return;
-    		};
-    		callback(null,collection);
-    	})
+        super(ArticleModel)
     }
 }
 

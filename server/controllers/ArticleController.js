@@ -56,3 +56,22 @@ exports.addOne = function(req,res,next){
 	})
 	
 }
+
+exports.editOne = function(req,res,next){
+
+	ArticleModel.findByIdAndUpdate(req.params.id,req.body,function(err,collection){
+		if(err){
+			res.json({
+				status:0,
+				info:err
+			});
+			return;
+		};
+		res.json({
+			status:1,
+			info:collection
+		});
+		
+	})
+	
+}

@@ -4,8 +4,8 @@ module.exports = function(app){
 		app.use('/api/'+url, other);
 	};
 	use('article',require('./article'));
-
-
+	use('upload',require('../qiniu'));
+	
 	//路由跳转
 	app.get('/', function(req, res, next) {
 	  	res.render('index', 

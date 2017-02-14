@@ -16,7 +16,7 @@ module.exports={
 	ACCESS_KEY:'C0Q0vWKAdRsfMG_1XYd3ei7X59XYcVD_7m9QFCv0',
 	SECRET_KEY:'VhF7Rk7NZL__dj8MX9qv2gZRqvG7AApbzGUjPazK',
 	BUCKET:'dpdtest',
-	ROOTPATH:'http://ohclaoi0z.bkt.clouddn.com/',
+	ROOTPATH:'//ohclaoi0z.bkt.clouddn.com/',
 	//邮件发送系统配置
 	EMAIL_ADMIN_USER:"1367030806@qq.com",//管理员邮箱，需要开启QQ邮箱SMTP服务，开启后会生成授权码
 	EMAIL_ADMIN_PASS:"nmcklmjannfphcch",//如果是qq的话，为授权码
