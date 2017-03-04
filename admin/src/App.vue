@@ -1,58 +1,78 @@
 <template>
     <div id="app">
-        <header class="g-header f-bg-blue">
-            <div class="m-topbar wrap">
-                <el-row class="top-bar">
-                    <el-col :xs="6" :sm="4" :lg="2">
-                        <div class="icon-wrap" @click="handleClick">
-                            <i class="el-icon-menu"></i>
+        <template v-if="withoutlayout">
+            <router-view></router-view>
+        </template>
+        <template v-if="!withoutlayout">
+            <header class="g-header f-bg-blue">
+                <div class="m-topbar wrap">
+                    <el-row class="top-bar">
+                        <el-col :xs="6" :sm="4" :lg="2">
+                            <div class="icon-wrap" @click="handleClick">
+                                <i class="el-icon-menu"></i>
+                            </div>
+                        </el-col>
+                        <el-col :xs="18" :sm="20" :lg="22">
+                            <section class="admin-title">
+                                博客后台管理系统
+                            </section>
+                            <section class="admin-box">
+                                <span>{{username}}</span> <span @click="loginOut">退出</span>
+                            </section>
+                        </el-col>
+                    </el-row>
+                </div>
+            </header>
+            <main>
+                <el-row>
+                    <el-col :xs="6" :sm="4" :lg="2" v-show="isShowNav">
+                        <div style="height:1px;visiblity:hidden;"></div>
+                        <aside class="g-nav f-bg-blue">
+                            <nav class="m-nav fixed">
+                                <ul class="nav">
+                                    <router-link to="/" tag="li">文章列表</router-link>
+                                    <router-link to="/add" tag="li">+添加文章</router-link>
+                                </ul>
+                            </nav>
+                        </aside>
+                    </el-col>
+                    <el-col :xs="18" :sm="20" :lg="22" :class="{'f-w100':!isShowNav}">
+                        <div class="g-content">
+                            <router-view></router-view>
                         </div>
                     </el-col>
-                    <el-col :xs="18" :sm="20" :lg="22">
-                        <section class="admin-title">
-                            博客后台管理系统
-                        </section>
-                        <section class="admin-box">
-                            <span>杜培东</span> <span>退出</span>
-                        </section>
-                    </el-col>
                 </el-row>
-            </div>
-        </header>
-        <main>
-            <el-row>
-                <el-col :xs="6" :sm="4" :lg="2" v-show="isShowNav">
-                    <div style="height:1px;visiblity:hidden;"></div>
-                    <aside class="g-nav f-bg-blue">
-                        <nav class="m-nav fixed">
-                            <ul class="nav">
-                                <router-link to="/" tag="li">文章列表</router-link>
-                                <router-link to="/add" tag="li">+添加文章</router-link>
-                            </ul>
-                        </nav>
-                    </aside>
-                </el-col>
-                <el-col :xs="18" :sm="20" :lg="22" :class="{'f-w100':!isShowNav}">
-                    <div class="g-content">
-                        <router-view></router-view>
-                    </div>
-                </el-col>
-            </el-row>
-        </main>
+            </main>
+        </template>
     </div>
 </template>
 
 <script>
 export default {
     name: 'app',
+    watch:{
+        '$route'(to,from){
+            this.withoutlayout = to.meta.withoutlayout;
+        }
+    },
     data(){
         return {
-            isShowNav: true
+            isShowNav: true,
+            withoutlayout:this.$route.meta.withoutlayout,
+            username:store.get('user')
         }
+    },
+    mounted(){
+        
     },
     methods:{
         handleClick(){
             this.isShowNav = !this.isShowNav;
+        },
+        loginOut(){
+            store.set('token','');
+            store.set('user','');
+            this.$router.push('/login');
         }
     }
 }

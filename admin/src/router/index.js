@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Index from 'components/index'
 import Add from 'components/add'
 import Edit from 'components/edit'
+import Login from 'components/login'
 Vue.use(Router)
 
 export default new Router({
@@ -22,5 +23,14 @@ export default new Router({
 	      	name: 'edit',
 	      	component: Edit
 	    },
+	    {
+	      	path: '/login',
+	      	name: 'login',
+	      	component: Login,
+	      	meta:{
+	      		withoutlayout:true,
+	      		noAuth:true
+	      	}
+	    }
 	]
 })

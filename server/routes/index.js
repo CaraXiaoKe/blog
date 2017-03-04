@@ -5,13 +5,10 @@ module.exports = function(app){
 	};
 	use('article',require('./article'));
 	use('upload',require('../qiniu'));
+	use('admin',require('./admin'));
+	use('comment',require('./comment'));
+
+	app.use('/',require('./link'));
+
 	
-	//路由跳转
-	app.get('/', function(req, res, next) {
-	  	res.render('index', 
-	  		{ 
-	  			title: 'Express' 
-	  		}
-	  	);
-	});
 }

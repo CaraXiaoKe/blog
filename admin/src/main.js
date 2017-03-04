@@ -8,10 +8,23 @@ import './assets/common.scss'
 import 'quill/dist/quill.snow.css'
 import VueResource from 'vue-resource'
 import router from './router'
-
+import promise from 'es6-promise';
+import Auth from '../middleware/auth'
+let auth = new Auth();
+promise .polyfill();
 Vue.use(VueResource)
 Vue.use(ElementUI)
-/* eslint-disable no-new */
+router.beforeEach((to, from, next) => {
+    if (!to.meta.noAuth&&!auth.loggedIn()) {
+	    next({
+	        path: '/login',
+	        query: { redirect: to.fullPath }
+	    })
+    } else {
+      	next()
+    }
+});
+
 new Vue({
   el: '#app',
   router,

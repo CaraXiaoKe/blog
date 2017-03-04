@@ -1,11 +1,213 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
+    <head>
+      	<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+        <title><%= title %></title>
+        <link rel='stylesheet' href='//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css'/>
+        <link href="//cdn.bootcss.com/normalize/5.0.0/normalize.min.css" rel="stylesheet">
+        <% if(!isMobile){ %>
+        <link href="//cdn.bootcss.com/Swiper/3.4.1/css/swiper.css" rel="stylesheet">
+        <% } %>
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+    </head>
+    <body>
+        <%- include nav.ejs %>
+        <main class="g-content">
+            <div class="inner-wrap">
+                <% if(!isMobile){ %>
+                <div class="swiper-container">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide red-slide"><img class="swiper-lazy" data-src="https://dn-youplus-app2.qbox.me/culture_p3_0.png"/></div>
+                        <div class="swiper-slide blue-slide"><img class="swiper-lazy" data-src="https://dn-youplus-app2.qbox.me/culture_p3_1.png"/></div>
+                        <div class="swiper-slide yellow-slide"><img class="swiper-lazy" data-src="https://dn-youplus-app2.qbox.me/culture_p3_2.png"/></div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>
+                <% } %>
+                <div class="article-box" id="app">
+                    <ul class="article-lists">
+                        <% posts.forEach(function(post){ %>
+                        <li class="have-img">
+                            <% if(!isMobile && post.post_thumbnail){ %>
+                                <a class="wrap-img" href="/blog/<%= post._id %>"><img class="lazy" data-original="<%= post.post_thumbnail.url %>"/></a>
+                            <% } %>
+                            <div class="content">
+                                <h3 class="title"><a class="title-url" href="/blog/<%= post._id %>"><%= post.post_title %></a></h3>
+                                <p class="abstract"><%= post.post_abstract %></p>
+                                <div class="meta">
+                                    <a class="read-icon" href="/blog/<%= post._id %>">
+                                        <i class="fa fa-eye"></i> 阅读(<%= post.post_pv %>)
+                                    </a>
+                                    <a class="comment-icon" href="/blog/<%= post._id %>">
+                                        <i class="fa fa-comment"></i> 评论(<%= post.post_comments %>)
+                                    </a>
+                                    <a class="tag">
+                                <span v-cloak>{{<%= post.post_classify_sup %> | typesFomat}}</span>-<span v-cloak>{{<%= post.post_classify_sub %> | typesFomat}}</span></a>
+                                    <time v-cloak>{{<%= post.post_created %> | dateFomat}}</time>
+                                </div>
+                            </div>
+                        </li>
+                        <% }) %>
+                        <template v-if="posts.length">
+                            <li class="have-img" v-for="post in posts">
+                                <div class="content">
+                                    <h3 class="title"><a class="title-url" :href="'/blog/'+post._id"> {{post.post_title}}</a></h3>
+                                    <p class="abstract">{{post.post_abstract}}</p>
+                                    <div class="meta">
+                                        <a class="read-icon" :href="'/blog/'+post._id">
+                                            <i class="fa fa-eye"></i> 阅读({{post.post_pv}})
+                                        </a>
+                                        <a class="comment-icon" :href="'/blog/'+post._id">
+                                            <i class="fa fa-comment"></i> 评论({{post.post_comments}})
+                                        </a>
+                                        <a class="tag">
+                                    <span v-cloak>{{post.post_classify_sup | typesFomat}}</span>-<span v-cloak>{{post.post_classify_sub | typesFomat}}</span></a>
+                                        <time>{{post.post_created | dateFomat}}</time>
+                                    </div>
+                                </div>
+                            </li>
+                        </template>
+                    </ul>
+                    <% if(!nodata){ %>
+                        <div class="m-load" v-if="!nodata">
+                            <button type="buttton" class="load-more" @click="loadMore">加载更多...</button>
+                        </div>
+                    <% }else if(posts.length==0){ %>
+                        <div style="text-align: center;margin-top:30px;">
+                            呵呵，什么也没有~~~~
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+        </main>
+        <aside class="broadcast-wrap">
+            <div class="leadship">
+                <p>前端：卡拉肖克*东</p>
+                <p>UI：小由</p>
+            </div>
+        </aside>
+        <div class="cf"></div>
+        <footer class="site-info-wrap">
+            <div class="container">
+                <div class="friend-link">
+                    <p>友情链接：<a href="javascript:void(0)" rel="nofollow">新浪</a> <a href="javascript:void(0)" rel="nofollow">博客园</a></p>
+                </div>
+            </div>
+        </footer>
+        <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+        <% if(!isMobile){ %>
+        <script src="//cdn.bootcss.com/Swiper/3.4.1/js/swiper.jquery.min.js"></script>
+        <% } %>
+        <script src="//cdn.bootcss.com/vue/2.1.10/vue.min.js"></script>
+        <script src="//cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+        <script>
+            var api = {
+                menu:<%- JSON.stringify(menus) %>,
+                mergeTypesHash:function(){
+                    var hash = {};
+                    var arr = this.menu;
+
+                    for(var n = 0, len = arr.length; n < len; n++){
+                        hash[arr[n].field_id] = arr[n].field_name;
+                        var _arr = arr[n].field_members;
+                        if(!arr[n].field_members){
+                            continue;
+                        }
+                        for(var k = 0, _len = _arr.length; k < _len; k++){
+                            hash[_arr[k].field_member_id] = _arr[k].field_member_name;
+                        }
+                    };
+                    return hash;
+                },
+                moment:function(seconds){
+                    var date = new Date(seconds);
+                    return date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
+                }
+            };
+            var typesHash = api.mergeTypesHash();
+            delete api.mergeTypesHash;
+            delete api.menu;
+            var webapp = new Vue({
+                el:"#app",
+                data:{
+                    posts: [],
+                    conditions: {},
+                    sortedBy: {
+                        _id: -1
+                    },
+                    filterBy: 'post_abstract post_classify_sub post_classify_sup post_comments post_created post_pv post_title',
+                    page_size: 6,
+                    offset: 1,
+                    nodata: false
+                },
+                methods:{
+                    loadMore:function(){ 
+                        var _this = this; 
+
+                        $.ajax({
+                            type:'get',
+                            url:'/api/article/pagination/fetch',
+                            dataType:'json',
+                            data:{
+                                conditions : this.conditions,
+                                sortedBy  : this.sortedBy,
+                                limit     : this.page_size,
+                                offset    : this.offset,
+                                filterBy  : this.filterBy
+                            },
+                            success:function(res){
+                                this.offset ++;
+                                _this.posts = _this.posts.concat(res.info.collections);
+                                _this.nodata = res.info.nodata;
+                                _this.$nextTick(()=>{
+                                    $("img.lazy").lazyload({
+                                        effect : "fadeIn"
+                                    });
+                                })  
+                            }
+                        })
+                    }
+                },
+                filters:{
+                   dateFomat:function(val){
+                       return api.moment(val);
+                   },
+                   typesFomat:function(val){
+                        return typesHash[val];
+                   }
+                }
+            });
+            $(function(){
+                $('[data-toggle]').each(function(){
+                    var s = $(this).data('toggle');
+                    if(s == 'collapse'){
+                        $(this).on('click',function(){
+                            var id = $(this).data('target')
+                            $(id).slideToggle();
+                        })
+                    };
+                });
+                var arr = window.location.pathname.split("/");
+                var len = arr.length;
+                $("[data-id]").each(function(){
+                    if($(this).data("id") == arr[len-1]){
+                        $(this).addClass("active");
+                    }
+                });
+                $("img.lazy").lazyload({
+                    effect : "fadeIn"
+                });
+                if(window.Swiper){
+                    var mySwiper = new Swiper('.swiper-container', {
+                        pagination : '.swiper-pagination',
+                        autoplay: 5000,//可选选项，自动滑动
+                        paginationClickable :true,
+                        loop:true,
+                        lazyLoading:true
+                    });
+                }
+               
+            });
+  	    </script> 
+    </body>
 </html>

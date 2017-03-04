@@ -1,0 +1,50 @@
+<nav class="fixed-top nav-bar bg-blue cf">
+    <a class="nav-brand pull-left" href="/">
+        <i class="fa fa-cloud"></i>
+    </a>
+    <a class="nav-brand pull-left sidebar-collpase" href="javascript:void(0);">
+        <input name="sidebar-input" class="sidebar-input" type="radio" id="sidebar-icon" checked>
+        <div class="tri-box" id="tri-box">
+            <div class="label-group">
+                <label class="checkbox-label" for="sidebar-icon"></label>
+                <label class="checkbox-label" for="sidebar-nav"></label>
+            </div>
+            <div class="line-group">
+                <i></i><i></i><i></i>
+            </div>
+       </div>
+    </a>
+    <a class="nav-collapse pull-right" data-toggle="collapse" href="javascript:void(0);" data-target="#nav-collapse">
+        <i class="fa fa-bars"></i>
+    </a>
+    <div class="container">
+        <ul class="nav nav-horizontal cf pull-left" id="nav-collapse">
+            <% menus.forEach(function(menu){ %>
+            <li class="nav-item" data-id="<%= menu.field_id %>">
+                <a class="nav-link" href="/cate/<%= menu.field_id %>"><%= menu.field_name %></a>
+            </li>
+            <% }) %>
+            <li class="nav-item m-search">
+                <form target="_blank" action="/site/serach" accept-charset="UTF-8" method="get">
+                        <input type="text" name="title" value="" placeholder="搜索" class="search-input" required>
+                        <a class="search-btn" href="javascript:void(0)">
+                            <button type="submit" class="fa fa-search"></button>
+                        </a>
+                </form>
+            </li>
+        </ul>
+    </div>
+</nav>
+<input name="sidebar-input" class="sidebar-input" type="radio" id="sidebar-nav">
+<aside class="fixed-left nav-sidebar" id="nav-sidebar">
+    <div class="m-classify">
+        <% menus.forEach(function(menu){ %>
+        <dl class="nav">
+            <dt><%= menu.field_name %></dt>
+            <% menu.field_members&&menu.field_members.forEach(function(member){ %>
+            <dd><a data-id="<%= member.field_member_id %>" href="/subcate/<%= member.field_member_id %>"><%= member.field_member_name %></a></dd>
+            <% }) %>
+        </dl>
+        <% }) %>
+    </div>
+</aside>

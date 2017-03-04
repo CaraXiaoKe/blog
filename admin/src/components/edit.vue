@@ -10,8 +10,13 @@
                         <el-input v-model="newPostForm.post_title"></el-input>
                     </el-col>
                 </el-form-item>
+                <el-form-item label="文章概要">
+                    <el-col :xs="24" :sm="18" :lg="12">
+                        <el-input type="textarea" :autosize="{minRows: 3, maxRows: 6}" v-model.trim="newPostForm.post_abstract"></el-input>
+                    </el-col>
+                </el-form-item>
                 <el-form-item label="编辑文章">
-                    <el-quill :quill-content="newPostForm.post_content" ref="editor"></el-quill>
+                    <el-quill :quill-content="newPostForm.post_html" ref="editor"></el-quill>
                 </el-form-item>
                 <el-form-item label="文章分类">
                     <el-select class="f-mt-0" v-model="newPostForm.post_classify_sup" placeholder="请选择分类">
@@ -26,6 +31,7 @@
                     <el-upload
                         action="/api/upload"
                         type="drag"
+                        :headers="headers"
                         :thumbnail-mode="true"
                         :on-remove="removeImage"
                         :on-success="successUpload"
@@ -45,49 +51,59 @@
 
 <script>
 import ElQuill from './common/quill.vue'
-import {classify_data} from '../api'
 
 export default {
     components:{ElQuill},
     name: 'index',
+    beforeRouteEnter(to,form,next){
+        next()
+    },
     data () {
-        let hash = {};
-        classify_data.forEach((item)=>{
-            hash[item.field_id] = item.field_members;
-        });
         return {
             newPostForm: {
                 post_title: '',
                 post_classify_sup:'',
                 post_classify_sub:'',
-                post_content:null,
-                post_thumbnail:{}
+                post_sup_name:'',
+                post_sub_name:'',
+                post_thumbnail:{},
+                post_abstract:'',
+                post_html:'',
+                post_user:store.get('user')
             },
             article_id:this.$route.params.id,
-            fieldTree:Object.freeze(classify_data),
+            fieldTree:[],
             subTree:[],
-            fieldHash:Object.freeze(hash),
-            fileList: []
+            fieldHash:{},
+            fileList: [],
+            headers:{
+                token:store.get('token')
+            }
         }
     },
     mounted(){
-
-        this.$http.get('/api/article/'+this.article_id).then((res)=>{
-            if(res.data.status == 1){
-                let sub_id = res.data.info.post_classify_sub;
-                this.newPostForm = res.data.info;
-                this.fileList =  [this.newPostForm.post_thumbnail];
+        Promise.all([this.$http.get('/api/article/types/all'),this.$http.get('/api/article/'+this.article_id)]).then(([typesRes,articleRes])=>{
+            this.fieldTree = Object.freeze(typesRes.data.info);
+            let hash = {};
+            typesRes.data.info.forEach((item)=>{
+                hash[item.field_id] = item.field_members;
+            });
+            this.fieldHash = Object.freeze(hash);
+            if(articleRes.data.status == 1){
+                let sub_id = articleRes.data.info.post_classify_sub;
+                this.newPostForm = articleRes.data.info;
+                this.fileList =  this.newPostForm.post_thumbnail ? [this.newPostForm.post_thumbnail]:[];
                 this.$nextTick(()=>{
                     this.newPostForm.post_classify_sub = sub_id;
                 })
             }else{
                 this.$message({
-                    message: '获取列表失败',
+                    message: '获取信息失败',
                     type: 'warning',
                     duration:1500
                 });
             };
-        })
+        });
     },
     watch:{
         'newPostForm.post_classify_sup'(val){
@@ -98,22 +114,42 @@ export default {
     methods:{
         editPost(){
             if(this.validateForm()){
-                this.newPostForm.post_content = this.$refs.editor.quill.getContents().ops;
-                this.$http.post('/api/article/edit/'+this.$route.params.id,this.newPostForm).then((res)=>{
-                    if(res.data.status == 1){
-                        this.$message({
-                            message: '修改成功',
-                            type: 'success',
-                            duration:1500
+                this.$confirm('确认添加该文章?', '提示', {
+                            confirmButtonText: '确定',
+                            cancelButtonText: '取消',
+                            type: 'warnin'
+                        }).then(() => {
+                            this.newPostForm.post_html = document.getElementById('edit-wrap').innerHTML;
+                            this.$http.post('/api/article/edit/'+this.$route.params.id,this.newPostForm,{headers:{token:store.get('token')}}).then((res)=>{
+                                if(res.data.status == 1){
+                                    this.$message({
+                                        message: '修改成功',
+                                        type: 'success',
+                                        duration:1500
+                                    });
+                                }else if(res.data.status==401){
+                                        this.$message({
+                                            message: '账号过期，请重新登录',
+                                            type: 'warning',
+                                            duration:1500
+                                        });
+                                        this.$router.push('/login');
+                                    
+                                } else {
+                                    this.$message({
+                                        message: '编辑失败，请稍后重试',
+                                        type: 'warning',
+                                        duration:1500
+                                    });
+                                    this.$router.push('/login');
+                                }
+                            })
+                        }).catch(() => {
+                              this.$message({
+                                type: 'info',
+                                message: '已取消编辑'
+                              });          
                         });
-                    }else{
-                        this.$message({
-                            message: '编辑失败',
-                            type: 'warning',
-                            duration:1500
-                        });
-                    };
-                })
             }
         },
         successUpload(res){
@@ -131,7 +167,8 @@ export default {
             this.fileList = [];
         },
         validateForm(){
-            let title = this.newPostForm.post_title.replace(/^\s+|\s+$/,'')
+            let title = this.newPostForm.post_title.replace(/^\s+|\s+$/,'');
+            let abstract = this.newPostForm.post_abstract.replace(/^\s+|\s+$/,'');
             if(title == ''){
                 this.$message({
                     message: '文章名字不能为空！',
@@ -143,6 +180,22 @@ export default {
             if(title.length > 40){
                 this.$message({
                     message: '文章名字不能太长！',
+                    type: 'warning',
+                    duration:1500
+                });
+                return false;
+            };
+            if(abstract == ''){
+                this.$message({
+                    message: '文章概要不能为空！',
+                    type: 'warning',
+                    duration:1500
+                });
+                return false;
+            };
+            if(abstract.length >= 70){
+                this.$message({
+                    message: '文章概要内容过长！',
                     type: 'warning',
                     duration:1500
                 });
@@ -164,14 +217,14 @@ export default {
                 });
                 return false;
             };  
-            if(this.newPostForm.post_thumbnail == null){
-                this.$message({
-                    message: '请上传图片！',
-                    type: 'warning',
-                    duration:1500
-                });
-                return false;
-            };  
+            // if(this.newPostForm.post_thumbnail == null){
+            //     this.$message({
+            //         message: '请上传图片！',
+            //         type: 'warning',
+            //         duration:1500
+            //     });
+            //     return false;
+            // };  
             return true;
         }
     }

@@ -1,70 +1,34 @@
-export var classify_data = [
-	{
-		field_id: 1,
-		field_name: "前端",
-		field_members:[
-			{
-				field_member_id: 10,
-				field_member_name:"HTML5",
-			},
-			{
-				field_member_id: 11,
-				field_member_name:"CSS3",
-			},
-			{
-				field_member_id: 12,
-				field_member_name:"JS",
-			},
-			{
-				field_member_id: 13,
-				field_member_name:"其他",
-			},
+import Vue from 'vue'
+export default {
+	page_size:10,//分页配置,
 
-		]
+	getArticleTypes(){//获取文章分类列表
+		return new Promise((reslove, reject)=> {
+			Vue.http.get('/api/article/types/all').then((res)=>{
+				reslove(res.data);
+			})
+		})
 	},
-	{
-		field_id: 2,
-		field_name: "UI",
-		field_members:[
-			{
-				field_member_id: 21,
-				field_member_name:"平面设计",
-			},
-			{
-				field_member_id: 22,
-				field_member_name:"WEB前端设计",
-			},
-			{
-				field_member_id: 23,
-				field_member_name:"移动端设计",
-			},
-			{
-				field_member_id: 24,
-				field_member_name:"交互设计",
-			}
-		]
+	getArticles(query){
+		return new Promise((reslove, reject)=>{
+			let params = query||{};
+			Vue.http.get('/api/article',{params}).then((res)=>{
+				reslove(res.data);
+			})
+		})
 	},
-	{
-		field_id: 3,
-		field_name: "后端",
-		field_members:[
-			{
-				field_member_id: 31,
-				field_member_name:"NODE",
-			},
-			{
-				field_member_id: 32,
-				field_member_name:"PHP",
-			},
-			{
-				field_member_id: 33,
-				field_member_name:"MYSQL",
-			},
-			{
-				field_member_id: 34,
-				field_member_name:"Moogodb",
-			}
-		]
-
+	getPageArticles(query){
+		return new Promise((reslove, reject)=>{
+			let params = {
+				conditons : query.conditions,
+                sortedBy  : query.sortedBy,
+                limit     : this.page_size,
+                offset    : query.offset,
+                filterBy  : query.filterBy
+			};
+			Vue.http.get('/api/article/pagination/fetch', {params}).then((res)=>{
+				reslove(res.data);
+			})
+		})
 	}
-]
+}

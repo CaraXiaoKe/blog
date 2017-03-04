@@ -1,5 +1,6 @@
 var ArticleModel = require('../models/ArticleModel');
-
+var dict = require('../config/dict');
+var utills = require('../utills/index');
 exports.getLists = function(req,res,next){
 
 	ArticleModel.find(req.query,function(err,collections){
@@ -69,9 +70,60 @@ exports.editOne = function(req,res,next){
 		};
 		res.json({
 			status:1,
-			info:collection
+			info:collection,
+			session:req.session.id,
+			cookie:req.headers.cookie
 		});
 		
 	})
 	
 }
+
+exports.getArticleTypes = function(req,res,next){
+	res.json({
+		status:1,
+		info:dict.articleTypes
+	})
+}
+
+exports.getPagination = function(req,res,next){
+	ArticleModel.getPagination(req.query,function(err,col){
+		if(err){
+			res.json({
+				status:0,
+				info:err
+			});
+			return;
+		};
+		res.json({
+			status:1,
+			info:col
+		})
+	})
+}
+
+exports.readOne= function(req,res,next){
+	ArticleModel.updatePv(req.body.id,function(err,col){
+		if(err){
+			res.json({
+				status:0,
+				info:err
+			});
+			return;
+		};
+		res.json({
+			status:1,
+			info:col
+		})
+	})
+}
+
+
+
+
+
+
+
+
+
+

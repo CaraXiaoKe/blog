@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      	<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+        <title><%= post.post_title %>|前端</title>
+        <link rel='stylesheet' href="//cdn.bootcss.com/quill/1.2.0/quill.snow.css">
+        <link rel='stylesheet' href='//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css'/>
+        <link rel='stylesheet' href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/styles/monokai-sublime.min.css" rel="stylesheet">  
+        <link href="//cdn.bootcss.com/normalize/5.0.0/normalize.min.css" rel="stylesheet">
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+    </head>
+    <body class="page-1">
+        <main class="g-content" id="app">
+            <div class="inner-wrap">
+                <div class="article-box">
+                    <article class="m-article">
+                        <h1 class="title"><%= post.post_title %></h1>
+                        <div class="meta">
+                            <a class="read-icon">
+                                <i class="fa fa-eye"></i> 阅读(<%= post.post_pv %>)
+                            </a>
+                            <a class="comment-icon">
+                                <i class="fa fa-comment"></i> 评论(<%= post.post_comments %>)
+                            </a>
+                            <time v-cloak>{{ <%= post.post_created %> | dateFomat }}</time>
+                        </div>
+                        <div class="abstract">    
+                            <blockquote><%= post.post_abstract %></blockquote>
+                        </div>
+                        <%- post.post_html %>
+                    </article>
+                </div>
+                <div class="m-comments">
+                    <i class="flag"></i>
+                    <i class="flag-base"></i>
+                    <div class="board-label">留言板</div>
+                    <div class="u-message">
+                        <form class="new-comments" @submit.prevent="submit">
+                            <div>
+                                <input v-model.trim="form.email" type="email" placeholder="账号" required/>
+                            </div>
+                            <div>
+                                <input v-model.trim="form.nickname" type="text" placeholder="昵称" required/>
+                            </div>
+                            <div>
+                                <textarea v-model.trim="form.content" placeholder="写下您的留言" required></textarea>
+                            </div>
+                            <div class="btn-group">
+                                <input type="reset" class="btn cancel" value="重置">
+                                <input type="submit" class="btn send" value="发表">
+                            </div>
+                        </form>
+                    </div>
+                    <template v-if="comments.length>0">
+                        <div class="count" v-cloak>
+                            {{comments.length}}条留言
+                        </div>
+                        <ul class="comments-lists">
+                            <li class="comment" v-for="comment in comments">
+                                <i class="circle"></i>
+                                <div class="user-info">
+                                    <div class="name">
+                                        {{comment.nickname}}
+                                    </div>
+                                    <div class="meta">
+                                        <time>{{comment.created_at | dateSecondsFomat}}</time>
+                                    </div>
+                                </div>
+                                <div class="content">
+                                   {{comment.content}}
+                                </div>
+                            </li>
+                        </ul>
+                    </template>
+                </div>
+            </div>
+        </main>
+        <nav class="fixed-top nav-bar bg-blue cf">
+            <a class="nav-brand pull-left" href="/">
+                <i class="fa fa-cloud"></i>
+            </a>
+            <a class="nav-brand pull-left sidebar-collpase" href="javascript:void(0);">
+                <input name="sidebar-input" class="sidebar-input" type="radio" id="sidebar-icon" checked>
+                <div class="tri-box" id="tri-box">
+                    <div class="label-group">
+                        <label class="checkbox-label" for="sidebar-icon"></label>
+                        <label class="checkbox-label" for="sidebar-nav"></label>
+                    </div>
+                    <div class="line-group">
+                        <i></i><i></i><i></i>
+                    </div>
+               </div>
+            </a>
+            <a class="nav-collapse pull-right" data-toggle="collapse" href="javascript:void(0);" data-target="#nav-collapse">
+                <i class="fa fa-bars"></i>
+            </a>
+            <div class="container">
+                <ul class="nav nav-horizontal cf pull-left" id="nav-collapse">
+                    <% menus.forEach(function(menu){ %>
+                    <li class="nav-item" data-id="<%= menu.field_id %>">
+                        <a class="nav-link" href="/cate/<%= menu.field_id %>"><%= menu.field_name %></a>
+                    </li>
+                    <% }) %>
+                    <li class="nav-item m-search">
+                        <form target="_blank" action="/site/serach" accept-charset="UTF-8" method="get">
+                                <input type="text" name="title" value="" placeholder="搜索" class="search-input" required>
+                                <a class="search-btn" href="javascript:void(0)">
+                                    <button type="submit" class="fa fa-search"></button>
+                                </a>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <input name="sidebar-input" class="sidebar-input" type="radio" id="sidebar-nav">
+        <aside class="fixed-left nav-sidebar" id="nav-sidebar">
+            <div class="m-classify">
+                <% menus.forEach(function(menu){ %>
+                <dl class="nav">
+                    <dt><%= menu.field_name %></dt>
+                    <% menu.field_members.forEach(function(member){ %>
+                    <dd><a data-id="<%= member.field_member_id %>" href="/subcate/<%= member.field_member_id %>"><%= member.field_member_name %></a></dd>
+                    <% }) %>
+                </dl>
+                <% }) %>
+            </div>
+        </aside>
+        <aside class="broadcast-wrap">
+            <div class="leadship">
+                <p>前端：卡拉肖克*东</p>
+                <p>UI：小由</p>
+            </div>
+        </aside>
+        <div class="cf"></div>
+        <footer class="site-info-wrap">
+            <div class="container">
+                <div class="friend-link">
+                    <p>友情链接：<a href="javascript:void(0)" rel="nofollow">新浪</a> <a href="javascript:void(0)" rel="nofollow">博客园</a></p>
+                </div>
+            </div>
+        </footer>
+        <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+        <script src="//cdn.bootcss.com/vue/2.1.10/vue.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/highlight.min.js"></script>
+        <script src="//cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+        <script>
+            hljs.initHighlightingOnLoad();
+            var api = {
+                id:"<%= post._id %>",
+                menu:<%- JSON.stringify(menus) %>,
+                mergeTypesHash:function(){
+                    var hash = {};
+                    var arr = this.menu;
+
+                    for(var n = 0, len = arr.length; n < len; n++){
+                        hash[arr[n].field_id] = arr[n].field_name;
+                        var _arr = arr[n].field_members;
+                        if(!arr[n].field_members){
+                            continue;
+                        }
+                        for(var k = 0, _len = _arr.length; k < _len; k++){
+                            hash[_arr[k].field_member_id] = _arr[k].field_member_name;
+                        }
+                    };
+                    return hash;
+                },
+                moment:function(seconds){
+                    var date = new Date(seconds);
+                    return date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
+                },
+                momentSeconds:function(seconds){
+                    var date = new Date(seconds);
+                    return date.getFullYear()+":"+(date.getMonth()+1)+":"+date.getDate()+' '+ date.getMinutes()+':'+date.getSeconds();
+                },
+            };
+            var typesHash = api.mergeTypesHash();
+            var app = new Vue({
+                el: '#app',
+                data: {    
+                    form:{
+                        email:'',
+                        nickname:'',
+                        content:'',
+                        article_id:api.id 
+                    },
+                    comments:[]
+                },
+                created(){
+                    var _this = this;
+                    $.ajax({
+                        type:'get',
+                        url:'/api/comment',
+                        dataType:'json',
+                        data:{
+                            article_id:api.id
+                        },
+                        success:function(res){
+                            _this.comments = res.info;
+                        }
+                    })
+                },
+                methods:{
+                    submit(){
+                        var exp = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+\.[a-zA-Z0-9_-]+$/;
+                        if(!exp.test(this.form.email)){
+                            alert("请输入正确的邮箱");
+                            return;
+                        };
+                        if(this.form.nickname.length > 20){
+                            alert("昵称太长了，亲！");
+                            return;
+                        };
+                        if(this.form.nickname.content == ''){
+                            alert("内容不能为空，亲！");
+                            return;
+                        };
+                        var _this = this;
+                        $.ajax({
+                            type:'post',
+                            url:'/api/comment',
+                            dataType:'json',
+                            data:this.form,
+                            success:function(res){
+                                if(res.status == 1){
+                                    _this.comments.unshift(res.info);
+                                    alert('留言成功！');
+                                }
+                            }
+                        })
+                        
+                    }
+                },
+                filters:{
+                   dateFomat:function(val){
+                       return api.moment(val);
+                   },
+                   dateSecondsFomat:function(val){
+                       return api.momentSeconds(val);
+                   },
+                   typesFomat:function(val){
+                        return typesHash[val];
+                   }
+                }
+            });
+            $(function(){
+                $('[data-toggle]').each(function(){
+                    var s = $(this).data('toggle');
+                    if(s == 'collapse'){
+                        $(this).on('click',function(){
+                            var id = $(this).data('target')
+                            $(id).slideToggle();
+                        })
+                    };
+                });
+                $("#editor").children('.ql-editor').attr("contenteditable",false);
+                var str = 'a' + api.id.slice(-5);
+                var pv = JSON.parse(window.sessionStorage.pv||"{}");
+                if(!pv[str]){
+                    $.ajax({
+                        type:'post',
+                        url:'/api/article/times',
+                        dataType:'json',
+                        data:{
+                           id:api.id 
+                        },
+                        success:function(res){
+                            pv[str] = 1;
+                            window.sessionStorage.pv = JSON.stringify(pv);
+                        }
+                    })
+                }
+                
+            });
+  	    </script> 
+    </body>
+</html>
