@@ -24,7 +24,7 @@ router.get('/', function(req, res, next) {
 		};
 		res.render('index', 
 	  		{ 
-	  			title: 'Express' ,
+	  			title: '前端' ,
 	  			posts: o.collections,
 	  			count:o.count,
 	  			nodata:o.nodata,
@@ -43,7 +43,7 @@ router.get('/cate/:id', function(req, res, next) {
 		};
 		res.render('index', 
 	  		{ 
-	  			title: 'Express' ,
+	  			title: '前端' ,
 	  			posts: o.collections,
 	  			count:o.count,
 	  			nodata:o.nodata,
@@ -61,7 +61,7 @@ router.get('/subcate/:id', function(req, res, next) {
 		};
 		res.render('index', 
 	  		{ 
-	  			title: 'Express' ,
+	  			title: '前端' ,
 	  			posts: o.collections,
 	  			count:o.count,
 	  			nodata:o.nodata,
@@ -79,7 +79,7 @@ router.get('/site/serach', function(req, res, next) {
 		};
 		res.render('index', 
 	  		{ 
-	  			title: 'Express' ,
+	  			title: '前端' ,
 	  			posts: o.collections,
 	  			count:o.count,
 	  			nodata:o.nodata,
@@ -92,7 +92,7 @@ router.get('/blog/:id', function(req, res, next) {
 	ArticleModel.findById(req.params.id,function(err,collection){
 		res.render('article', 
 	  		{ 
-	  			title: 'Express' ,
+	  			title: '前端' ,
 	  			post: collection,
 	  			menus:dict.articleTypes
 	  		}
