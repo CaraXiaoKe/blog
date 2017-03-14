@@ -30,7 +30,7 @@
 		},
 		methods:{
 			submit(){
-				this.$http.post('/api/admin/register',this.form).then((res)=>{
+				this.$http.post('/api/admin/login',this.form,{headers:{token:store.get('token')}}).then((res)=>{
 					if(res.data.status == 0){
 						this.$message({
 		                    message: res.data.info,
@@ -53,29 +53,6 @@
 		                
 					}
 				})
-				// this.$http.post('/api/admin/login',this.form,{headers:{token:store.get('token')}}).then((res)=>{
-				// 	if(res.data.status == 0){
-				// 		this.$message({
-		  //                   message: res.data.info,
-		  //                   type: 'warning',
-		  //                   duration:1500
-		  //               });
-				// 	}else{
-				// 		this.$message({
-		  //                   message: "登录成功！",
-		  //                   type: 'success',
-		  //                   duration:1500
-		  //               });
-		  //               store.set("token",res.data.token);
-		  //               store.set("user",res.data.admin);
-		  //               if(this.$route.query.redirect){
-		  //               	this.$router.push(this.$route.query.redirect);
-		  //               }else{
-		  //               	this.$router.push('/');
-		  //               }
-		                
-				// 	}
-				// })
 			}
 		}
 	}
