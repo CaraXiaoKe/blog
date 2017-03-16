@@ -13,7 +13,7 @@ router.post('/register', function(req, res, next) {
 			});
 			return;
 		};
-	 	if(collection){
+	 	if(collection && req.body.isnew){
 	 		res.json({
 	 			status:0,
 	 			info:"用户已存在"
@@ -29,6 +29,23 @@ router.post('/register', function(req, res, next) {
 	 		return ;
 	 	};
 	 	var md5 = crypto.createHash('md5').update(password).digest('hex');
+	 	if(collection && !req.body.isnew){
+	 		AdminModel.findByIdAndUpdate(collection._id,{admin:admin,password:md5},function(err,collection){
+		 		if(err){
+					res.json({
+						status:0,
+						info:'更新失败',
+						err:err
+					});
+					return;
+				};
+			 	res.json({
+			 		status:1,
+			 		info:"更新成功"
+			 	})
+		 	})
+	 		return;
+	 	};
 	 	AdminModel.save({admin:admin,password:md5},function(err,collection){
 	 		if(err){
 				res.json({

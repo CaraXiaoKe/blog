@@ -4,6 +4,7 @@ import Index from 'components/index'
 import Add from 'components/add'
 import Edit from 'components/edit'
 import Login from 'components/login'
+import Admin from 'components/admin'
 Vue.use(Router)
 
 export default new Router({
@@ -17,6 +18,11 @@ export default new Router({
 	      	path: '/add',
 	      	name: 'add',
 	      	component: Add
+	    },
+	    {
+	      	path: '/newuser',
+	      	name: 'newuser',
+	      	component: Admin
 	    },
 	    {
 	      	path: '/edit/:id',

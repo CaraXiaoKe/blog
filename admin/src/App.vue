@@ -32,6 +32,7 @@
                                 <ul class="nav">
                                     <router-link to="/" tag="li">文章列表</router-link>
                                     <router-link to="/add" tag="li">+添加文章</router-link>
+                                    <router-link v-if="canCreateUser" to="/newuser" tag="li">添加用户</router-link>
                                 </ul>
                             </nav>
                         </aside>
@@ -51,19 +52,19 @@
 export default {
     name: 'app',
     watch:{
-        '$route'(to,from){
+        $route(to,from){
             this.withoutlayout = to.meta.withoutlayout;
+            this.username = store.get('user');
+            this.canCreateUser = this.username==="杜培东";
         }
     },
     data(){
         return {
             isShowNav: true,
             withoutlayout:this.$route.meta.withoutlayout,
-            username:store.get('user')
+            username:"",
+            canCreateUser:false
         }
-    },
-    mounted(){
-        
     },
     methods:{
         handleClick(){
