@@ -1559,3 +1559,10 @@ li {
 .m-login .el-col {
 		margin-bottom: 20px;
 }
+
+.register-box {
+	text-align: center;
+}
+.mt10 {
+	margin-top: 10px;
+}
