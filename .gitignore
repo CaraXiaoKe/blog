@@ -1,6 +1,7 @@
 .DS_Store
 admin/node_modules/
 server/node_modules/
+admin/dist/
 server/config/
 server/dist/
 npm-debug.log
