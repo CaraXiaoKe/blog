@@ -10,10 +10,12 @@ import VueResource from 'vue-resource'
 import router from './router'
 import promise from 'es6-promise';
 import Auth from '../middleware/auth'
+import DpdTest from './test/index'
 let auth = new Auth();
 promise .polyfill();
-Vue.use(VueResource)
-Vue.use(ElementUI)
+Vue.use(VueResource);
+Vue.use(ElementUI);
+Vue.use(DpdTest);
 router.beforeEach((to, from, next) => {
     if (!to.meta.noAuth&&!auth.loggedIn()) {
 	    next({

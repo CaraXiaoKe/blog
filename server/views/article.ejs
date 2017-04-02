@@ -185,7 +185,7 @@
                     },
                     comments:[]
                 },
-                created(){
+                created:function(){
                     var _this = this;
                     $.ajax({
                         type:'get',
@@ -200,7 +200,7 @@
                     })
                 },
                 methods:{
-                    submit(){
+                    submit:function(){
                         var exp = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+\.[a-zA-Z0-9_-]+$/;
                         if(!exp.test(this.form.email)){
                             alert("请输入正确的邮箱");

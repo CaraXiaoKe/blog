@@ -159,7 +159,7 @@
                                 this.offset ++;
                                 _this.posts = _this.posts.concat(res.info.collections);
                                 _this.nodata = res.info.nodata;
-                                _this.$nextTick(()=>{
+                                _this.$nextTick(function(){
                                     $("img.lazy").lazyload({
                                         effect : "fadeIn"
                                     });
