@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge">
       	<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
         <title><%= title %></title>
         <link rel='stylesheet' href='//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css'/>
@@ -88,13 +89,7 @@
             </div>
         </aside>
         <div class="cf"></div>
-        <footer class="site-info-wrap">
-            <div class="container">
-                <div class="friend-link">
-                    <p>友情链接：<a href="javascript:void(0)" rel="nofollow">新浪</a> <a href="javascript:void(0)" rel="nofollow">博客园</a></p>
-                </div>
-            </div>
-        </footer>
+        <%- include footer.ejs %>
         <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
         <% if(!isMobile){ %>
         <script src="//cdn.bootcss.com/Swiper/3.4.1/js/swiper.jquery.min.js"></script>

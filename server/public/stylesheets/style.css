@@ -22,6 +22,9 @@ html,body {
 [v-cloak] {
 	display: none;
 } 
+.text-right{
+	text-align: right;
+}
 * {
 	box-sizing: border-box;
 }
@@ -45,7 +48,9 @@ input:focus {
 	height: 0;
 	clear: both;
 }
-
+.f-12 {
+	font-size: 12px;
+}
 a{
     border: 0;
     color:inherit;
@@ -340,13 +345,13 @@ a{
 	padding: 0 10px;
 }
 .m-article {
-	padding-bottom: 30px;
+	padding-bottom: 10px;
 }
 .m-article .title{
 	word-break: break-word;
     margin: 20px 0;
     font-family: -apple-system,SF UI Display,Arial,PingFang SC,Hiragino Sans GB,Microsoft YaHei,WenQuanYi Micro Hei,sans-serif;
-    font-size: 34px;
+    font-size: 32px;
     font-weight: 700;
     line-height: 1.3;
 }
@@ -527,6 +532,12 @@ a{
 	}
 }
 @media screen and (max-width: 48.625em){
+	.m-article .title {
+		font-size: 28px;
+	}
+	.m-article .ql-container.ql-snow {
+		font-size: 12px;
+	}
 	.g-content {
 		margin-left:0;
 		min-height:auto;
@@ -551,9 +562,9 @@ a{
 	.friend-link {
 		padding: 0 10px;
 	}
-	.article-box {
+/*	.article-box {
 		padding:0 10px;
-	}
+	}*/
 	.container,.g-content{
 		width:100%;
 		padding-top: 0rem;
@@ -647,6 +658,16 @@ a{
 	}
 	.sidebar-input:checked + .nav-sidebar + #nav-mask__left {
 		display: block;
+	}
+	.ql-snow .ql-editor pre {
+		white-space: pre;
+	}
+	.ql-snow .ql-editor pre.ql-syntax {
+		display: inline-block;
+	}
+	.ql-editor::-webkit-scrollbar {
+		background:transparent;
+		height:0;
 	}
 }
 .ql-container.ql-snow {
