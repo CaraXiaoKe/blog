@@ -535,7 +535,7 @@ a{
 	.m-article .title {
 		font-size: 28px;
 	}
-	.m-article .ql-container.ql-snow {
+	.m-article .ql-container.ql-snow pre {
 		font-size: 12px;
 	}
 	.g-content {
