@@ -664,6 +664,7 @@ a{
 	}
 	.ql-snow .ql-editor pre.ql-syntax {
 		display: inline-block;
+		min-width: 100%;
 	}
 	.ql-editor::-webkit-scrollbar {
 		background:transparent;
