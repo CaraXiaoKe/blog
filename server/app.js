@@ -33,6 +33,7 @@ app.use(session({
   saveUninitialized: true
 }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '/')));
 app.use(useragent.express());
 app.use(function(req, res, next) {
   app.locals.isMobile = req.useragent.isMobile;
