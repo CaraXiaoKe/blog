@@ -252,6 +252,13 @@
                         })
                     };
                 });
+                if($("#nav-mask__left").length){
+                    $("#nav-mask__left").on("click",function(){
+                        if($("#sidebar-nav").prop("checked")){
+                            $("#sidebar-icon").prop("checked",true);
+                        }
+                    })
+                };
                 $("#editor").children('.ql-editor').attr("contenteditable",false);
                 var str = 'a' + api.id.slice(-5);
                 var pv = JSON.parse(window.sessionStorage.pv||"{}");

@@ -5,6 +5,7 @@
         <title><%= title %></title>
         <link rel='stylesheet' href='//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css'/>
         <link href="//cdn.bootcss.com/normalize/5.0.0/normalize.min.css" rel="stylesheet">
+        <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
         <% if(!isMobile){ %>
         <link href="//cdn.bootcss.com/Swiper/3.4.1/css/swiper.css" rel="stylesheet">
         <% } %>
@@ -12,7 +13,7 @@
     </head>
     <body>
         <%- include nav.ejs %>
-        <main class="g-content">
+        <main class="g-content" id="g-content">
             <div class="inner-wrap">
                 <% if(!isMobile){ %>
                 <div class="swiper-container">
@@ -94,7 +95,7 @@
                 </div>
             </div>
         </footer>
-        <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+        <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
         <% if(!isMobile){ %>
         <script src="//cdn.bootcss.com/Swiper/3.4.1/js/swiper.jquery.min.js"></script>
         <% } %>
@@ -181,7 +182,7 @@
                 $('[data-toggle]').each(function(){
                     var s = $(this).data('toggle');
                     if(s == 'collapse'){
-                        $(this).on('click',function(){
+                         $(this).on('click',function(){
                             var id = $(this).data('target')
                             $(id).slideToggle();
                         })
@@ -194,6 +195,13 @@
                         $(this).addClass("active");
                     }
                 });
+                if($("#nav-mask__left").length){
+                    $("#nav-mask__left").on("click",function(){
+                        if($("#sidebar-nav").prop("checked")){
+                            $("#sidebar-icon").prop("checked",true);
+                        }
+                    })
+                };
                 $("img.lazy").lazyload({
                     effect : "fadeIn"
                 });
