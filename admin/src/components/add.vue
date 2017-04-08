@@ -168,7 +168,7 @@ export default {
 		        });
 		        return false;
         	};
-        	if(title.length > 100){
+        	if(title.length > 40){
         		this.$message({
 		          	message: '文章名字不能太长！',
 		          	type: 'warning',
@@ -184,7 +184,7 @@ export default {
 		        });
 		        return false;
         	};
-        	if(abstract.length >= 70){
+        	if(abstract.length >= 150){
         		this.$message({
 		          	message: '文章概要内容过长！',
 		          	type: 'warning',

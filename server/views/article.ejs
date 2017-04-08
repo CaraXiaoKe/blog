@@ -2,7 +2,7 @@
 <html>
     <head>
       	<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
-        <title><%= post.post_title %>|前端</title>
+        <title><%= post.post_title %>-前端</title>
         <link rel='stylesheet' href="//cdn.bootcss.com/quill/1.2.0/quill.snow.css">
         <link rel='stylesheet' href='//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css'/>
         <link rel='stylesheet' href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/styles/monokai-sublime.min.css" rel="stylesheet">  
@@ -125,6 +125,9 @@
                 <% }) %>
             </div>
         </aside>
+         <% if(isMobile){ %>
+        <div id="nav-mask__left"></div>
+        <% } %>
         <aside class="broadcast-wrap">
             <div class="leadship">
                 <p>前端：卡拉肖克*东</p>
@@ -247,7 +250,9 @@
                     };
                 });
                 if($("#nav-mask__left").length){
+                      console.log(22);
                     $("#nav-mask__left").on("click",function(){
+                          console.log(22);
                         if($("#sidebar-nav").prop("checked")){
                             $("#sidebar-icon").prop("checked",true);
                         }
