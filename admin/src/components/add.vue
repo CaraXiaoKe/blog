@@ -168,7 +168,7 @@ export default {
 		        });
 		        return false;
         	};
-        	if(title.length > 40){
+        	if(title.length > 100){
         		this.$message({
 		          	message: '文章名字不能太长！',
 		          	type: 'warning',
