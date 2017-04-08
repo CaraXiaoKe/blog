@@ -16,7 +16,7 @@
                     </el-col>
                 </el-form-item>
                 <el-form-item label="编辑文章">
-                    <el-quill :quill-content="newPostForm.post_html" ref="editor"></el-quill>
+                    <el-quill  ref="editor"></el-quill>
                 </el-form-item>
                 <el-form-item label="文章分类">
                     <el-select class="f-mt-0" v-model="newPostForm.post_classify_sup" placeholder="请选择分类">
@@ -89,6 +89,7 @@ export default {
                 hash[item.field_id] = item.field_members;
             });
             this.fieldHash = Object.freeze(hash);
+            this.$refs.editor.setHtml(articleRes.data.info.post_html);
             if(articleRes.data.status == 1){
                 let sub_id = articleRes.data.info.post_classify_sub;
                 this.newPostForm = articleRes.data.info;

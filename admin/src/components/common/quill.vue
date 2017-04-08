@@ -59,11 +59,6 @@
 				fullscreenLoading:false
 			}
 		},
-		watch:{
-        	'quillContent'(){
-        		this.quill.clipboard.dangerouslyPasteHTML(0,this.quillContent);
-        	}
-    	},
 		mounted(){
 			this.quill = new Quill('#editor', {
 			    modules: { 
@@ -115,8 +110,12 @@
 			//解决火狐问题
 			triggerFile(){
 				this.$refs.quillimg.click();
+			},
+			setHtml(content){
+				this.quill.clipboard.dangerouslyPasteHTML(0,content);
 			}
 		}
+		
 	}
 </script>
 <style>
