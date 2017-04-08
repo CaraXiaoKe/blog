@@ -676,6 +676,7 @@ a{
 	}
 	.ql-editor li::before {
 		width:0.6em;
+    	margin-right: 1em;
 	}
 }
 .ql-container.ql-snow {
