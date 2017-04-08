@@ -5,3 +5,4 @@ admin/dist/
 server/config/
 server/dist/
 npm-debug.log
+server/logs/

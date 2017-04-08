@@ -193,7 +193,8 @@ export default {
                 });
                 return false;
             };
-            if(abstract.length >= 70){
+            console.log(abstract.length);
+            if(abstract.length >= 100){
                 this.$message({
                     message: '文章概要内容过长！',
                     type: 'warning',
