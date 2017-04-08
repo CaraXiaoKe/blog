@@ -364,7 +364,7 @@ a{
     word-break: break-word;
     font-size: 14px;
     font-weight: 400;
-    line-height: 30px;
+    line-height: 1.5em;
 }
 .m-article .meta {
 	font-size: 0.9rem;
@@ -541,7 +541,7 @@ a{
 	.g-content {
 		margin-left:0;
 		min-height:auto;
-		padding:0 0.6rem;
+		padding:0 1rem;
 	}
 	.u-message {
 		width:100%;
@@ -587,6 +587,7 @@ a{
 	.m-article .abstract {
 		margin-left: 0;
 		border-left: 4px solid #27b3e7;
+		padding:10px;
 	}
 	.tri-box .line-group i:nth-child(1) {
 		transform-origin: 1px 0;
@@ -669,6 +670,12 @@ a{
 	.ql-editor::-webkit-scrollbar {
 		background:transparent;
 		height:0;
+	}
+	.ql-editor ol, .ql-editor ul {
+		padding-left:0.5em;
+	}
+	.ql-editor li::before {
+		width:0.6em;
 	}
 }
 .ql-container.ql-snow {
