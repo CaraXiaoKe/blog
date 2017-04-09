@@ -28,16 +28,13 @@
   				</el-form-item>
   				<el-form-item label="上传缩略图">
 				    <el-upload
-					  	action="/api/upload"
-					  	type="drag"
-					  	:thumbnail-mode="true"
+					  	action="/api/upload/"
+					  	list-type="picture-card"
 					  	:on-remove="removeImage"
 					  	:headers="headers"
 					  	:on-success="successUpload"
-					  	:default-file-list="fileList">
-					  		<i class="el-icon-upload"></i>
-					  		<div class="el-dragger__text">将文件拖到此处，或<em>点击上传</em></div>
-					  		<div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+					  	:file-list="fileList">
+					  		<i class="el-icon-plus"></i>
 					</el-upload>
 				</el-form-item>
 				<el-form-item>
