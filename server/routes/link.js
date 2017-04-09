@@ -99,4 +99,11 @@ router.get('/blog/:id', function(req, res, next) {
 	  	);
 	})	  	
 });
+router.get('*', function(req, res, next) {
+	res.render('error', 
+  		{ 
+  			title: '页面不存在' 
+  		}
+  	);
+});
 module.exports = router;
