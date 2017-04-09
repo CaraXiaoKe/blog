@@ -551,6 +551,9 @@ a{
 	}
 }
 @media screen and (max-width: 48.625em){
+	.u-message .btn-group {
+		text-align: left;
+	}
 	.nav-brand, .nav-collapse {
 		padding:0.5rem 1.8rem;
 	}
