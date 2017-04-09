@@ -53,6 +53,16 @@ class BaseModel {
     		callback(null,collection);
         });
     }
+    updateComments(_id,callback){
+        this.model.findByIdAndUpdate(_id,{$inc:{"post_comments":1}}, {new: true}, (err, collection) => {
+            if(err){
+                console.log(err);
+                callback(err);
+                return;
+            };
+            callback(null,collection);
+        });
+    }
     updatePv(_id,callback){
         this.model.findByIdAndUpdate(_id,{$inc:{"post_pv":1}}, {new: true}, (err, collection) => {
             if(err){

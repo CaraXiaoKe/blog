@@ -20,7 +20,7 @@
                                 <i class="fa fa-eye"></i> 阅读(<%= post.post_pv %>)
                             </a>
                             <a class="comment-icon">
-                                <i class="fa fa-comment"></i> 评论(<%= post.post_comments %>)
+                                <i class="fa fa-comment"></i> 留言(<%= post.post_comments %>)
                             </a>
                             <time v-cloak>{{ <%= post.post_created %> | dateFomat }}</time>
                         </div>
@@ -136,7 +136,7 @@
         </aside>
         <div class="cf"></div>
         <%- include footer.ejs %>
-        <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+        <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
         <script src="//cdn.bootcss.com/vue/2.1.10/vue.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/highlight.min.js"></script>
         <script src="//cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
