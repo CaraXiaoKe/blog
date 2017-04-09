@@ -12,7 +12,10 @@ button,input {
 	outline: none;
 	-webkit-appearance: none;
 }
-
+ol,li,ul,dt,dd,dl,i,p,blockquote,h1,h2,h3,h4,h5,h6,div{
+	margin:0;
+	padding:0;
+}
 
 html,body {
 	-webkit-font-smoothing: antialiased;
@@ -244,14 +247,14 @@ a{
     word-wrap: break-word;
 }
 .article-lists .content {
-	padding-right:210px;
+	padding-right:153px;
 }
 .article-lists .wrap-img {
 	position: absolute;
 	right:0;
 	top:10px;
-	width:200px;
-	height:150px;
+	width:150px;
+	height:113px;
 }
 .article-lists .wrap-img img {
 	width:100%;
@@ -260,7 +263,7 @@ a{
 .article-lists .title{
 	font-size:1.5rem;
 	line-height:1em;
-	padding:0.625rem 0;
+	padding:0.625rem 0 1rem;
 }
 .article-lists .tag {
 	display: inline-block;
@@ -523,6 +526,22 @@ a{
 .leadship p:first-child{
 	margin-top: 0;
 }
+.home-back-box {
+	position: fixed;
+	font-size:24px;
+	width:46px;
+	height:46px;
+	color:#27b3e7;
+	border-radius:23px;
+	line-height: 46px;
+	text-align: center;
+	/*border:1px solid #27b3e7;*/
+	box-shadow:0 0 10px 2px rgba(39, 179, 231,0.2);
+	right:10px;
+	bottom:10px;
+	z-index:100;
+
+}
 @media screen and (max-width: 75em){
 	.broadcast-wrap {
 		display: none;
@@ -532,11 +551,20 @@ a{
 	}
 }
 @media screen and (max-width: 48.625em){
+	.nav-brand, .nav-collapse {
+		padding:0.5rem 1.8rem;
+	}
 	.m-article .title {
 		font-size: 28px;
 	}
 	.m-article .ql-container.ql-snow pre {
 		font-size: 12px;
+	}
+	.article-lists .have-img .abstract {
+		min-height: auto;
+	}
+	.article-lists .abstract {
+		padding-bottom:0px;
 	}
 	.g-content {
 		margin-left:0;
@@ -625,7 +653,7 @@ a{
 	.nav-bar .container {
 		padding-left:0;
 		padding-right: 0;
-		margin-top:3.9125rem;
+		margin-top:2.7rem;
 	}
 	.nav-collapse {
 		display: block;
