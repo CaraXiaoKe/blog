@@ -262,7 +262,7 @@ a{
 }
 .article-lists .title{
 	font-size:1.5rem;
-	line-height:1em;
+	line-height:1.2em;
 	padding:0.625rem 0 1rem;
 }
 .article-lists .tag {
@@ -691,13 +691,10 @@ a{
 	.sidebar-input:checked + .nav-sidebar + #nav-mask__left {
 		display: block;
 	}
-	.ql-snow .ql-editor pre {
-		white-space: pre;
-	}
-	.ql-snow .ql-editor pre.ql-syntax {
+	/*.ql-snow .ql-editor pre.ql-syntax {
 		display: inline-block;
 		min-width: 100%;
-	}
+	}*/
 	.ql-editor::-webkit-scrollbar {
 		background:transparent;
 		height:0;
@@ -715,7 +712,6 @@ a{
 }
 .ql-editor {
 	padding:0;
-	text-align: justify;
 }
 
 .m-quill {
