@@ -66,6 +66,9 @@ export default {
             canCreateUser:false
         }
     },
+    mounted(){
+        this.username = store.get('user');
+    },
     methods:{
         handleClick(){
             this.isShowNav = !this.isShowNav;
