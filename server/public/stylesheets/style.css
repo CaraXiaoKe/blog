@@ -251,7 +251,6 @@ a{
     border-left: none;
     word-wrap: break-word;
     background:#fff;
-    padding-bottom:10px;
     padding-left:10px;
     padding-right:10px;
 }
@@ -304,6 +303,7 @@ a{
 .article-lists .meta {
 	font-size:0.75rem;
 	margin-bottom:0.625rem;
+	padding-top:5px;
 }
 .article-lists .meta a {
 	margin-right: 0.625rem;
