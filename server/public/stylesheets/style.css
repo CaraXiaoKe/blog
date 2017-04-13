@@ -93,6 +93,9 @@ a{
 	padding:1.0625rem 0;
 	color:#fff;
 }
+.nav-brand svg {
+	height:20px;
+}
 .nav-collapse:focus, .nav-collapse:hover {
 	color:#fff;
 }
@@ -333,11 +336,19 @@ a{
 }
 .broadcast-wrap {
 	float: left;
-	position: relative;
 	margin-left: -13rem;
 	width:13rem;
-	height:13rem;
-	border:2px solid #27b3e7;
+	padding-top: 20px;
+}
+.broadcast-wrap .box {
+	text-align: center;
+	background:#27B3E7;
+	padding:36px 0;
+}
+.broadcast-wrap .box svg {
+	display: block;
+	width:75%;
+	margin:0 auto;
 }
 .m-load {
 	padding:2rem 0;
@@ -376,34 +387,46 @@ a{
 	word-break: break-word;
     margin: 20px 0;
     font-family: -apple-system,SF UI Display,Arial,PingFang SC,Hiragino Sans GB,Microsoft YaHei,WenQuanYi Micro Hei,sans-serif;
-    font-size: 32px;
+    font-size: 24px;
+    color:#27B3E7;
     font-weight: 700;
     line-height: 1.3;
 }
 .m-article .abstract {
-	padding: 20px;
-	margin-left: 30px;
+	padding: 15px;
+	margin-left: 10px;
     margin-bottom: 20px;
     background-color: #f7f7f7;
-    border-left: 6px solid #27b3e7;
+    border-left: 4px solid #27b3e7;
     word-break: break-word;
     font-size: 14px;
     font-weight: 400;
     line-height: 1.5em;
 }
 .m-article .meta {
-	font-size: 0.9rem;
+	font-size: 12px;
+	padding-bottom: 10px;
 	margin-bottom: 20px;
+	border-bottom: 1px solid #27B3E7;
+}
+.m-article .meta .fa {
+	width:25px;
+	height:25px;
+	text-align: center;
+	line-height: 25px;
+	border-radius:50%;
+	box-shadow: 0px 2px 9px #ccc;
+	vertical-align: middle;
 }
 .m-article .meta .read-icon {
 	margin-right: 5px;
 }
 .m-article .meta time {
-	color:#969696;
-	margin-left: 20px;
+	color:#000;
+	float: right;
 }
 .m-article .ql-container.ql-snow {
-	font-size:16px;
+	font-size:14px;
 	text-align: justify;
 	padding-bottom: 20px;
 	border-bottom: 1px solid #ececec;
@@ -533,20 +556,22 @@ a{
     margin-bottom: 20px;
 }
 .leadship {
-	width:100%;
-	position: absolute;
-	top:50%;
-	padding-left:20px;
-	transform:translateY(-50%);
-	-webkit-transform:translateY(-50%); 
+	padding:28px 0 9px 20px;
 	color:#88866F;
-	font-size: 1rem; 
+	font-size: 14px; 
+	background: rgba(39,179,231,0.1);
 }
 .leadship p {
-	margin-top: 20px;
+	margin-bottom: 19px;
 }
-.leadship p:first-child{
-	margin-top: 0;
+.blue-circle {
+	width:30px;
+	height:30px;
+	border-radius: 50%;
+	background:rgba(39,179,231,0.4);
+	display: inline-block;
+	vertical-align: middle;
+	margin-right: 14px;
 }
 .home-back-box {
 	position: fixed;
@@ -578,9 +603,6 @@ a{
 	}
 	.nav-brand, .nav-collapse {
 		padding:0.5rem 1.8rem;
-	}
-	.m-article .title {
-		font-size: 28px;
 	}
 	.m-article .ql-container.ql-snow pre {
 		font-size: 12px;
