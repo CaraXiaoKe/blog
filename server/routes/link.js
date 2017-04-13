@@ -25,6 +25,7 @@ router.get('/', function(req, res, next) {
 		res.render('index', 
 	  		{ 
 	  			title: '前端' ,
+	  			cate_id:-1,
 	  			posts: o.collections,
 	  			count:o.count,
 	  			nodata:o.nodata,
@@ -81,6 +82,7 @@ router.get('/site/serach', function(req, res, next) {
 		res.render('index', 
 	  		{ 
 	  			title: '前端' ,
+	  			cate_id:-1,
 	  			posts: o.collections,
 	  			count:o.count,
 	  			nodata:o.nodata,
