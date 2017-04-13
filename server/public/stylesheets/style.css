@@ -220,6 +220,14 @@ a{
 .g-content .inner-wrap {
 	margin-left: 14rem;
 	margin-right: 14rem;
+	position: relative;
+}
+.g-content .inner-wrap .mask-white {
+	position: absolute;
+	bottom:0;
+	height:30px;
+	background:#fff;
+	width:100%;
 }
 .swiper-container {
 	height:200px;
@@ -745,4 +753,8 @@ a{
 }
 .m-quill .ql-editor {
 	min-width:600px;
+}
+/*友言广告处理*/
+#uyan-copyright {
+	display: none;
 }
