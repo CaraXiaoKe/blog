@@ -12,7 +12,7 @@
         <% } %>
         <link rel='stylesheet' href='/stylesheets/style.css' />
     </head>
-    <body>
+    <body data-spm="0">
         <%- include nav.ejs %>
         <main class="g-content" id="g-content">
             <div class="inner-wrap">
@@ -117,7 +117,9 @@
                 },
                 moment:function(seconds){
                     var date = new Date(seconds);
-                    return date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
+                    var m = date.getMonth()+1;
+                    var d = date.getDate();
+                    return date.getFullYear()+"-"+(m<10 ? "0"+m : m) +"-"+ (d<10 ? "0"+d : d);
                 }
             };
             var typesHash = api.mergeTypesHash();

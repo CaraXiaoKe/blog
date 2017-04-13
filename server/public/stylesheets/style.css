@@ -5,8 +5,11 @@ body {
     font-family: 'PingFangSC-Light','microsoft yahei', 'Helvetica', simhei, simsun, sans-serif;
     line-height: 1.42857143;
     color: #333333;
-    background-color: #ffffff;
+    background-color: #fff;
     padding-top:3.95rem;
+}
+body[data-spm="0"]{
+	background-color: #f2f2f2;
 }
 button,input {
 	outline: none;
@@ -242,16 +245,22 @@ a{
 }
 .article-lists li {
 	position: relative;
-	margin: 0 0 17px;
-    border-bottom: 1px solid #f0f0f0;
+	margin: 0 0 10px;
+	border:1px solid #e6e6e6;
+    border-right: none;
+    border-left: none;
     word-wrap: break-word;
+    background:#fff;
+    padding-bottom:10px;
+    padding-left:10px;
+    padding-right:10px;
 }
 .article-lists .content {
 	padding-right:153px;
 }
 .article-lists .wrap-img {
 	position: absolute;
-	right:0;
+	right:10px;
 	top:10px;
 	width:150px;
 	height:113px;
@@ -318,7 +327,7 @@ a{
 	border:2px solid #27b3e7;
 }
 .m-load {
-	padding:3.125rem 0;
+	padding:2rem 0;
 }
 .m-load .load-more {
 	display: block;
@@ -572,7 +581,10 @@ a{
 	.g-content {
 		margin-left:0;
 		min-height:auto;
-		padding:0 1rem;
+		padding:0 15px;
+	}
+	body[data-spm="0"] .g-content{
+		padding:0;
 	}
 	.u-message {
 		width:100%;
@@ -690,6 +702,10 @@ a{
 	}
 	.sidebar-input:checked + .nav-sidebar + #nav-mask__left {
 		display: block;
+	}
+	.m-load {
+		padding-top:0;
+		padding-bottom:0.8rem;
 	}
 	/*.ql-snow .ql-editor pre.ql-syntax {
 		display: inline-block;

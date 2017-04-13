@@ -163,11 +163,17 @@
                 },
                 moment:function(seconds){
                     var date = new Date(seconds);
-                    return date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
+                    var m = date.getMonth()+1;
+                    var d = date.getDate();
+                    return date.getFullYear()+"-"+(m<10 ? "0"+m : m) +"-"+ (d<10 ? "0"+d : d);
                 },
                 momentSeconds:function(seconds){
                     var date = new Date(seconds);
-                    return date.getFullYear()+":"+(date.getMonth()+1)+":"+date.getDate()+' '+ date.getMinutes()+':'+date.getSeconds();
+                    var M = date.getMonth()+1;
+                    var d = date.getDate();
+                    var h = date.getHours();
+                    var m = date.getMinutes();
+                    return date.getFullYear()+":"+( M<10 ? "0"+M : M )+":"+( d<10 ? "0"+d : d )+' '+ ( h<10 ? "0"+h : h) +':'+ ( m<10 ? "0"+m : m);
                 },
             };
             var typesHash = api.mergeTypesHash();
