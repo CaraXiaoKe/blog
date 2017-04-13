@@ -43,7 +43,8 @@ router.get('/cate/:id', function(req, res, next) {
 		};
 		res.render('index', 
 	  		{ 
-	  			title: '前端' ,
+	  			title: '前端',
+	  			cate_id:req.params.id,
 	  			posts: o.collections,
 	  			count:o.count,
 	  			nodata:o.nodata,
@@ -54,7 +55,6 @@ router.get('/cate/:id', function(req, res, next) {
 });
 router.get('/subcate/:id', function(req, res, next) {
 	var query = extendConditions({post_classify_sub:req.params.id});
-	
 	ArticleModel.getPagination(query,function(err,o){
 		if(o.collections.length < query.limit){
 			o.nodata = true; 
@@ -62,6 +62,7 @@ router.get('/subcate/:id', function(req, res, next) {
 		res.render('index', 
 	  		{ 
 	  			title: '前端' ,
+	  			cate_id:0,
 	  			posts: o.collections,
 	  			count:o.count,
 	  			nodata:o.nodata,
