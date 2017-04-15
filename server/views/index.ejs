@@ -59,13 +59,13 @@
                         <template v-if="posts.length">
                             <li class="have-img" v-for="post in posts">
                                 <div class="content">
-                                    <h3 class="title"><a class="title-url" :href="'/blog/'+post._id"> {{post.post_title}}</a></h3>
+                                    <h3 class="title"><a @click.prevent="skip(post._id)" class="title-url" href="javascript:void(0)"> {{post.post_title}}</a></h3>
                                     <p class="abstract">{{post.post_abstract}}</p>
                                     <div class="meta">
-                                        <a class="read-icon" :href="'/blog/'+post._id">
+                                        <a @click.prevent="skip(post._id)" class="read-icon" href="javascript:void(0)">
                                             <i class="fa fa-eye"></i> 阅读({{post.post_pv}})
                                         </a>
-                                        <a class="comment-icon" :href="'/blog/'+post._id">
+                                        <a @click.prevent="skip(post._id)" class="comment-icon" href="javascript:void(0)">
                                             <i class="fa fa-comment"></i> 评论({{post.post_comments}})
                                         </a>
                                         <a class="tag">
@@ -78,7 +78,7 @@
                     </ul>
                     <% if(!nodata){ %>
                         <div class="m-load" v-if="!nodata">
-                            <button type="buttton" class="load-more" @click="loadMore">加载更多...</button>
+                            <a href="<%= pathUrl %>" class="load-more" @click.prevent="loadMore">加载更多...</a>
                         </div>
                     <% }else if(posts.length==0){ %>
                         <div style="text-align: center;margin-top:30px;">
@@ -156,7 +156,23 @@
                     offset: 1,
                     nodata: false
                 },
+                mounted(){
+                    if(/(cate|subcate)\/(\d+)(\/(\d+))?/.exec(window.location.href)){
+                        $("[data-id]").each(function(){
+                            if($(this).data("id") == RegExp.$2){
+                                $(this).addClass("active");
+                            }
+                        });
+                        this.conditions[RegExp.$1 ==='cate' ? 'post_classify_sup':'post_classify_sub'] = RegExp.$2;
+                        if(RegExp.$4){
+                            this.offset = RegExp.$4;
+                        };
+                    }
+                },
                 methods:{
+                    skip:function(id){
+                        window.location.href='/blog/'+id;
+                    },
                     loadMore:function(){ 
                         var _this = this; 
 
@@ -202,13 +218,6 @@
                             $(id).slideToggle();
                         })
                     };
-                });
-                var arr = window.location.pathname.split("/");
-                var len = arr.length;
-                $("[data-id]").each(function(){
-                    if($(this).data("id") == arr[len-1]){
-                        $(this).addClass("active");
-                    }
                 });
                 if($("#nav-mask__left").length){
                     $("#nav-mask__left").on("click",function(){

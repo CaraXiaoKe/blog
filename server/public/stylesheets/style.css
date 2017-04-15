@@ -397,6 +397,8 @@ a{
 	margin: 0 auto;
 	width:6.8125rem;
 	height: 2.0625rem;
+	text-align: center;
+	line-height: 2.062rem;
 	border-radius:1.03125rem;
 	-webkit-border-radius:1.03125rem;
 	border:1px solid #27b3e7;
