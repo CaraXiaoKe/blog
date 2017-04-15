@@ -37,16 +37,16 @@
                         <% posts.forEach(function(post){ %>
                         <li class="have-img">
                             <% if(!isMobile && post.post_thumbnail){ %>
-                                <a class="wrap-img" href="http://92node.com/blog/<%= post._id %>"><img class="lazy" data-original="<%= post.post_thumbnail.url %>"/></a>
+                                <a class="wrap-img" href="/blog/<%= post._id %>"><img class="lazy" data-original="<%= post.post_thumbnail.url %>"/></a>
                             <% } %>
                             <div class="content">
-                                <h3 class="title"><a class="title-url" href="http://92node.com/blog/<%= post._id %>"><%= post.post_title %></a></h3>
+                                <h3 class="title"><a class="title-url" href="/blog/<%= post._id %>"><%= post.post_title %></a></h3>
                                 <p class="abstract"><%= post.post_abstract %></p>
                                 <div class="meta">
-                                    <a class="read-icon" href="http://92node.com/blog/<%= post._id %>">
+                                    <a class="read-icon" href="/blog/<%= post._id %>">
                                         <i class="fa fa-eye"></i> 阅读(<%= post.post_pv %>)
                                     </a>
-                                    <a class="comment-icon" href="http://92node.com/blog/<%= post._id %>">
+                                    <a class="comment-icon" href="/blog/<%= post._id %>">
                                         <i class="fa fa-comment"></i> 评论(<%= post.post_comments %>)
                                     </a>
                                     <a class="tag">
@@ -78,7 +78,7 @@
                     </ul>
                     <% if(!nodata){ %>
                         <div class="m-load" v-if="!nodata">
-                            <a href="http://92node.com<%= pathUrl %>" class="load-more" @click.prevent="loadMore">加载更多...</a>
+                            <a href="<%= pathUrl %>" class="load-more" @click.prevent="loadMore">加载更多...</a>
                         </div>
                     <% }else if(posts.length==0){ %>
                         <div style="text-align: center;margin-top:30px;">
