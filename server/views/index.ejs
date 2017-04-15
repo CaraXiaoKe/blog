@@ -4,9 +4,9 @@
         <meta http-equiv="X-UA-Compatible" content="IE=Edge">
       	<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
         <title>一滴水前端博客 - 行进在web前端艺术之巅的路上</title>
-        <meta name="keywords" content="前端开发">
+        <meta name="keywords" content="前端开发,vue,web前端设计,html5">
         <meta name="baidu-site-verification" content="tAgNpcsyzy" />
-        <meta name="description" content="站在前端大神们的肩膀成长起来，那么就要在前端这个无尽的知识汪洋中贡献自己的一滴水">
+        <meta name="description" content="从事前端开发，web前端设计，vue，html5，javascript，node等技术的开发和学习。站在前端大神们的肩膀成长起来，那么就要在前端这个无尽的知识汪洋中贡献自己的一滴水">
         <link rel='stylesheet' href='//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css'/>
         <link href="//cdn.bootcss.com/normalize/5.0.0/normalize.min.css" rel="stylesheet">
         <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
@@ -37,16 +37,16 @@
                         <% posts.forEach(function(post){ %>
                         <li class="have-img">
                             <% if(!isMobile && post.post_thumbnail){ %>
-                                <a class="wrap-img" href="http://www.92node.com/blog/<%= post._id %>"><img class="lazy" data-original="<%= post.post_thumbnail.url %>"/></a>
+                                <a class="wrap-img" href="http://92node.com/blog/<%= post._id %>"><img class="lazy" data-original="<%= post.post_thumbnail.url %>"/></a>
                             <% } %>
                             <div class="content">
-                                <h3 class="title"><a class="title-url" href="http://www.92node.com/blog/<%= post._id %>"><%= post.post_title %></a></h3>
+                                <h3 class="title"><a class="title-url" href="http://92node.com/blog/<%= post._id %>"><%= post.post_title %></a></h3>
                                 <p class="abstract"><%= post.post_abstract %></p>
                                 <div class="meta">
-                                    <a class="read-icon" href="http://www.92node.com/blog/<%= post._id %>">
+                                    <a class="read-icon" href="http://92node.com/blog/<%= post._id %>">
                                         <i class="fa fa-eye"></i> 阅读(<%= post.post_pv %>)
                                     </a>
-                                    <a class="comment-icon" href="http://www.92node.com/blog/<%= post._id %>">
+                                    <a class="comment-icon" href="http://92node.com/blog/<%= post._id %>">
                                         <i class="fa fa-comment"></i> 评论(<%= post.post_comments %>)
                                     </a>
                                     <a class="tag">
