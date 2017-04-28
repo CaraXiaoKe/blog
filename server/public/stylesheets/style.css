@@ -651,23 +651,24 @@ a{
 	opacity: 0.4;
 	transform: rotate(-45deg);
 	background:#27b3e7;
+
 	animation: searchLights 1s ease-in 1s infinite;
 }
 @-webkit-keyframes searchLights {
 	0% {left:-20px;top:0;}
-	100% {left:80px;top:100px;}
+	100% {left:80px;top:80px;}
 }
 @-o-keyframes searchLights {
 	0% {left:-20px;top:0;}
-	100% {left:80px;top:100px;}
+	100% {left:80px;top:80px;}
 }
 @-moz-keyframes searchLights {
 	0% {left:-20px;top:0;}
-	100% {left:80px;top:100px;}
+	100% {left:80px;top:80px;}
 }
 @keyframes searchLights {
-	0% {left:-20px;top:0;}
-	100% {left:80px;top:100px;}
+	0% {left:20px;top:-40px;}
+	100% {left:80px;top:80px;}
 }
 @media screen and (max-width: 75em){
 	.broadcast-wrap {
