@@ -647,7 +647,7 @@ a{
 	left:-20px;
 	top:0;
 	height:10px;
-	width: 150px;
+	width: 80px;
 	opacity: 0.4;
 	transform: rotate(-45deg);
 	background:#27b3e7;
@@ -655,19 +655,19 @@ a{
 }
 @-webkit-keyframes searchLights {
 	0% {left:-20px;top:0;}
-	100% {left:150px;top:100px;}
+	100% {left:80px;top:100px;}
 }
 @-o-keyframes searchLights {
 	0% {left:-20px;top:0;}
-	100% {left:150px;top:100px;}
+	100% {left:80px;top:100px;}
 }
 @-moz-keyframes searchLights {
 	0% {left:-20px;top:0;}
-	100% {left:150px;top:100px;}
+	100% {left:80px;top:100px;}
 }
 @keyframes searchLights {
 	0% {left:-20px;top:0;}
-	100% {left:150px;top:100px;}
+	100% {left:80px;top:100px;}
 }
 @media screen and (max-width: 75em){
 	.broadcast-wrap {

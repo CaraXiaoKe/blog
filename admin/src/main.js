@@ -16,6 +16,13 @@ promise .polyfill();
 Vue.use(VueResource);
 Vue.use(ElementUI);
 Vue.use(DpdTest);
+let a  = {
+  install:function(){
+
+  }
+}
+Vue.use(a);
+console.log(a);
 router.beforeEach((to, from, next) => {
     if (!to.meta.noAuth&&!auth.loggedIn()) {
 	    next({
