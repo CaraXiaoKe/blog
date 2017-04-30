@@ -4,7 +4,9 @@ module.exports = function(app){
 		app.use('/api/'+url, other);
 	};
 	use('article',require('./article'));
+	use('plugin',require('./plugin'));
 	use('upload',require('../qiniu'));
+	use('upload-crop',require('../qiniu/crop'));
 	use('admin',require('./admin'));
 	use('comment',require('./comment'));
 

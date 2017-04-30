@@ -5,6 +5,9 @@ import Add from 'components/add'
 import Edit from 'components/edit'
 import Login from 'components/login'
 import Admin from 'components/admin'
+import Plugins from 'components/plugin'
+import PluginsList from 'components/plugin-list'
+import PluginEdit from 'components/plugin-edit'
 Vue.use(Router)
 
 export default new Router({
@@ -20,14 +23,29 @@ export default new Router({
 	      	component: Add
 	    },
 	    {
+	      	path: '/edit/:id',
+	      	name: 'edit',
+	      	component: Edit
+	    },
+	    {
 	      	path: '/newuser',
 	      	name: 'newuser',
 	      	component: Admin
 	    },
 	    {
-	      	path: '/edit/:id',
-	      	name: 'edit',
-	      	component: Edit
+	      	path: '/plugin/list',
+	      	name: 'plugin_list',
+	      	component: PluginsList
+	    },
+	    {
+	      	path: '/plugin/add',
+	      	name: 'plugin',
+	      	component: Plugins
+	    },
+	    {
+	      	path: '/plugin/edit/:id',
+	      	name: 'plugin_edit',
+	      	component: PluginEdit
 	    },
 	    {
 	      	path: '/login',

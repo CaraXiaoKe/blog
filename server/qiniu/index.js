@@ -1,8 +1,6 @@
 var settings = require('../config/settings');
 var qiniu = require("qiniu");
 var checkLogin = require('../middlewares/checklogin.js');
-var multipart = require('connect-multiparty');
-var multipartMiddleware = multipart();
 var fs = require('fs');
 
 qiniu.conf.ACCESS_KEY = settings.ACCESS_KEY;
@@ -51,4 +49,4 @@ var putFile = function(req,res){
       	}
 	});
 }
-module.exports = [checkLogin,multipartMiddleware,putFile];
+module.exports = [checkLogin,putFile];

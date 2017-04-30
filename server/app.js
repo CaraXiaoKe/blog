@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 var bodyParser = require('body-parser');
+var multipart = require('connect-multiparty');
 var routes = require('./routes/index');
 var settings=require('./config/settings');
 var useragent = require('express-useragent');
@@ -20,6 +21,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(multipart({uploadDir:'./uploads' }));
 app.use(session({
   secret: 'blog',
   name: 'token',   //这里的name值得是cookie的name，默认cookie的name是：connect.sid

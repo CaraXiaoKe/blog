@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var ArticleModel = require('../models/ArticleModel');
+var PluginModel = require('../models/PluginModel');
 var dict = require('../config/dict');
 function extendConditions(obj){
 	var o = {
@@ -166,6 +167,71 @@ router.get('/blog/:id', function(req, res, next) {
 	  		}
 	  	);
 	})	  	
+});
+router.get('/plugin', function(req, res, next) {
+	var query = extendConditions();
+	query.limit = 12;
+	PluginModel.getPagination(query,function(err,o){
+		if(o.collections.length < query.limit){
+			o.nodata = true; 
+		};
+		o.collections = o.collections.map((item)=>{
+			item.post_tag = item.post_tag.join(",");
+			return item;
+		});
+		res.render('plugin', 
+	  		{ 
+	  			title: '优秀的JS插件集合' ,
+	  			posts: o.collections,
+	  			next:2,
+	  			count:o.count,
+	  			nodata:o.nodata
+	  		}
+	  	);
+	})	  	
+});
+router.get('/plugin/:id', function(req, res, next) {
+	PluginModel.findById(req.params.id,function(err,collection){
+		res.render('plugin-detail', 
+	  		{ 
+	  			title: '前端' ,
+	  			post: collection
+	  		}
+	  	);
+	})	  	
+});
+router.get('/plugin/p/:page_id', function(req, res, next) {
+	var query = extendConditions();
+	query.limit =  12;
+	var offset = req.params.page_id;
+	if(isNaN(offset) || offset < 1 ){
+		offset = 1;
+	};
+	query.offset = Math.floor(offset)-1;
+	PluginModel.getPagination(query,function(err,o){
+		if(o.collections.length < query.limit){
+			o.nodata = true; 
+		};
+		o.collections = o.collections.map((item)=>{
+			item.post_tag = item.post_tag.join(",");
+			return item;
+		});
+		res.render('plugin', 
+	  		{ 
+	  			title: '优秀的JS插件集合' ,
+	  			next:query.offset+2,
+	  			posts: o.collections,
+	  			count:o.count,
+	  			nodata:o.nodata
+	  		}
+	  	);
+	})
+		// res.render('plugin', 
+	 //  		{ 
+	 //  			title: '优秀的JS插件集合' ,
+	 //  			post: []
+	 //  		}
+	 //  	);	  	
 });
 router.get('*', function(req, res, next) {
 	res.render('error', 

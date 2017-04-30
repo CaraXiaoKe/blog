@@ -31,7 +31,9 @@
                             <nav class="m-nav fixed">
                                 <ul class="nav">
                                     <router-link to="/" tag="li">文章列表</router-link>
+                                    <router-link to="/plugin/list" tag="li">插件列表</router-link>
                                     <router-link to="/add" tag="li">+添加文章</router-link>
+                                    <router-link to="/plugin/add" tag="li">+添加插件</router-link>
                                     <router-link v-if="canCreateUser" to="/newuser" tag="li">添加用户</router-link>
                                 </ul>
                             </nav>

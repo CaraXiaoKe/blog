@@ -30,5 +30,19 @@ export default {
 				reslove(res.data);
 			})
 		})
+	},
+	getPagePlugins(query){
+		return new Promise((reslove, reject)=>{
+			let params = {
+				conditons : query.conditions,
+                sortedBy  : query.sortedBy,
+                limit     : this.page_size,
+                offset    : query.offset,
+                filterBy  : query.filterBy
+			};
+			Vue.http.get('/api/plugin/pagination/fetch', {params}).then((res)=>{
+				reslove(res.data);
+			})
+		})
 	}
 }

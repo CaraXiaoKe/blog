@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      	<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+        <title><%= title %>-一滴水前端博客</title>
+        <link rel='stylesheet' href='//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css'/>
+        <link rel='stylesheet' href='//cdn.bootcss.com/normalize/6.0.0/normalize.min.css'/>
+        <link rel='stylesheet' href='/stylesheets/style.css'/>
+        <link rel='stylesheet' href='//cdn.bootcss.com/bootstrap/4.0.0-alpha.6/css/bootstrap-grid.min.css'/>
+        <style>
+        	.g-p {
+				width:100%;
+				padding-top: 400px;
+        	}
+        	.m-canv {
+        		width:100%;
+        		height:400px;
+        		background:#000;
+        		position: fixed;
+        		top:0;
+        		left:0;
+        		margin:0;
+        		z-index:-1;
+        	}
+        	.m-p0 {
+        		width:100%;
+        		height:400px;
+        		position: fixed;
+        		top:0;
+        		left:0;
+        		margin:0;
+        		z-index:0;
+        	}
+			.m-p0 .box{
+				position: absolute;
+				left:0;
+				top:0;
+				width:100%;
+				height:100%;
+				margin:0;
+			}
+			.m-p0 h1 {
+				color:#27b3e7;
+				font-size:38px;
+				padding:0 40px;
+				text-align: center;
+			}
+			.m-p0 .home {
+				display: block;
+				position: absolute;
+				z-index:20;
+				left:30px;
+				top:0;
+				width:40px;
+				font-size:30px;
+				color:#27b3e7;
+			}
+			.m-p1 {
+				background-color: #F4F4F4;
+				padding-bottom:20px;
+				position: relative;
+				z-index: 1;
+
+			}
+			.m-p1 .col-xl-3 {
+				margin-top: 20px;
+			    padding:0px 10px;
+			}
+			.figure {
+				width:100%;
+				transition: all 1s ease 0s;
+			    border-radius: 5px;
+			    -webkit-border-radius: 5px;
+			    box-shadow: 0 1px 3px rgba(0,0,0,0.18);
+			    background:#fff;
+			    overflow: hidden;
+			}
+			.figure .box0 {
+				padding: 6px 10px 28px;
+			    height: 80px;
+			    overflow: hidden;
+			}
+			.figure .box0 .title{
+				margin-top: 7px;
+    			margin-bottom: 5px;
+				color: #60BDE8;
+				font-weight: bolder;
+				font-weight: 14px;
+			}
+			.figure .box0 p {
+				color: #838383;
+   	 			padding-bottom: 10px;
+   	 			font-size: 0.85em;
+			}
+			.figure .box1 {
+				padding:0 10px;
+			    font-size: 12px;
+			    height: 35px;
+			    line-height: 35px;
+			    max-width: 210px;
+			}
+			.figure .box2 {
+				font-size:10px;
+				background-color: #f6f6f6;
+    			border-top: 1px solid #e7e7e7;
+    			padding: 7px 15px 7px 15px;
+    			color: #8B8B8C;
+			}
+        </style>
+    </head>
+    <body data-spm="100">
+    	<div class="g-p">
+    		<div class="m-canv">
+    			<% if(!isMobile){ %>
+    			<canvas id="canv" height="400"></canvas>
+    			<% } %>
+    		</div>
+    		<header class="m-p0">
+    			<div class="box row align-items-center justify-content-center" id="header">
+    				<h1>优秀的javascript插件列表</h1>
+    			</div>
+    			<a class="home" href="/">
+    				<i class="fa fa-home"></i>
+    			</a>
+    		</header>
+    		<main class="m-p1 contain-fluid">
+				<article class="container" id="app">
+					<div class="row no-gutters">
+						<template v-if="isInt">
+							<% posts.forEach(function(post){ %>
+							<section class="col-xl-3 col-lg-4 col-md-6">
+								<figure class="figure">
+									<a class="img-res-box" target="_blank" href="/plugin/<%= post._id %>">
+										<img class="lazy" data-original="<%= post.post_thumbnail.url %>"/>
+									</a>
+									<div class="box0">
+										<figcaption class="title ellipsis"><%=  post.post_title %></figcaption>
+										<p><%= post.post_abstract %></p>
+									</div>
+									<div class="box1 ellipsis">
+										<i class="fa fa-list-ul"></i>&nbsp;&nbsp;<%=  post.post_tag %>
+									</div>
+									<div class="box2">
+				                        <i class="fa fa-eye"></i><span> &nbsp;<%=  post.post_pv %></span>
+				                    </div>
+								</figure>
+							</section>
+							<% }) %>
+						</template>
+						<template v-else>
+							<section class="col-xl-3 col-lg-4 col-md-6" v-for="post in posts">
+								<figure class="figure">
+									<a class="img-res-box" target="_blank" :href="'/plugin/'+post._id">
+										<img class="lazy" :data-original="post.post_thumbnail.url"/>
+									</a>
+									<div class="box0">
+										<figcaption class="title ellipsis">{{post.post_title}}</figcaption>
+										<p>{{post.post_abstract}}</p>
+									</div>
+									<div class="box1 ellipsis">
+										<i class="fa fa-list-ul"></i>&nbsp;&nbsp;{{post.post_tag | transfer}}
+									</div>
+									<div class="box2">
+				                        <i class="fa fa-eye"></i><span> &nbsp;{{post.post_pv}}</span>
+				                    </div>
+								</figure>
+							</section>
+						</template>
+					</div>
+					<nav class="text-center">
+						<% if(!isMobile){ %>
+						<ul class="pagination">
+						    <li :class="{'disabled': current == 1}"><a href="javascript:;" @click.prevent="setCurrent(1)"> 首页 </a></li>
+            				<li v-show="current !== 1"><a href="javascript:;" @click.prevent="setCurrent(current - 1)"> 上一页 </a></li> 
+						    <li v-for="p in grouplist" :class="{'active': current == p.val}"><a href="javascript:;" @click="setCurrent(p.val)"> {{ p.text }} </a></li>
+						    <li v-show="current !== page">
+						    	<% if(!nodata){ %>
+						    	<a href="/plugin/p/<%= next %>" @click.prevent="setCurrent(current + 1)"> 下一页</a>
+						    	<% }else{ %>
+						    	<a href="javascript:;" @click.prevent="setCurrent(current + 1)"> 下一页</a>
+						    	 <% } %>
+						    </li>
+            				<li :class="{'disabled': current == page}"><a href="javascript:;" @click.prevent="setCurrent(page)"> 尾页 </a></li>
+						</ul>
+						<% }else{ %>
+						<ul class="pagination">
+            				<li v-show="current !== 1"><a href="javascript:;" @click.prevent="setCurrent(current - 1)"> 上一页 </a></li>
+						    <li v-show="current !== page">
+						    	<% if(!nodata){ %>
+						    	<a href="/plugin/p/<%= next %>" @click.prevent="setCurrent(current + 1)"> 下一页</a>
+						    	<% }else{ %>
+						    	<a href="javascript:;" @click.prevent="setCurrent(current + 1)"> 下一页</a>
+						    	 <% } %>
+						    </li>
+						</ul>
+						<% } %>
+					</nav>				
+				</article>
+    		</main>
+    	</div>
+		<script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+        <script src="//cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+		<script src="//cdn.bootcss.com/vue/2.1.10/vue.min.js"></script>
+		<% if(!isMobile){ %>
+		<script src="/javascripts/plugin.js"></script>
+		<% } %>
+		<script>
+			var vm = new Vue({
+				el:"#app",
+				data:{
+					isInt:true,
+					total: <%= count %>,
+			        display: 12,
+			        current:<%= next-1 %>,
+			        pagegroup:5,
+			        posts:[]
+				},
+				mounted:function(){
+					$.ajax({
+	                        type:'get',
+	                        url:'/api/plugin',
+	                        dataType:'json',
+	                        data:{
+	                            
+	                        },
+	                        success:function(res){
+	                             
+	                        }
+	                    })
+				},
+				methods:{
+					setCurrent: function(idx) {
+			            if( this.current != idx && idx > 0 && idx < this.page + 1) {
+			            	this.isInt = false;
+			                this.current = idx;   
+			                this.getData();                 
+			            }                
+			        },
+			        getData:function(){
+			        	 _this = this;
+			        	$.ajax({
+	                        type:'get',
+	                        url:'/api/plugin/pagination/fetch',
+	                        dataType:'json',
+	                        data:{
+	                            conditions : {},
+	                            sortedBy  : {
+	                            	_id:-1
+	                            },
+	                            limit     : 12,
+	                            offset    : this.current-1,
+	                        },
+	                        success:function(res){
+	                            _this.posts = res.info.collections;
+	                            _this.nodata = res.info.nodata;
+	                            _this.$nextTick(function(){
+	                                $("img.lazy").lazyload({
+	                                    effect : "fadeIn"
+	                                });
+	                            })  
+	                        }
+	                    })
+			        }
+				},
+				computed:{
+					page:function() { // 总页数
+			            return Math.ceil(this.total / this.display);
+			        },
+			        grouplist:function(){ // 获取分页页码
+			            var len = this.page , temp = [], list = [], count = Math.floor(this.pagegroup / 2) ,center = this.current;
+			            if( len <= this.pagegroup ){
+			                while(len--){ temp.push({text:this.page-len,val:this.page-len});};
+			                return temp;
+			            }
+			            while(len--){ temp.push(this.page - len);};
+			            var idx = temp.indexOf(center);                
+			            (idx < count) && ( center = center + count - idx); 
+			            (this.current > this.page - count) && ( center = this.page - count);
+			            temp = temp.splice(center - count -1, this.pagegroup);                
+			            do {
+			                var t = temp.shift();
+			                list.push({
+			                    text: t,
+			                    val: t
+			                });
+			            }while(temp.length);                
+			            if( this.page > this.pagegroup ){
+			                (this.current > count + 1) && list.unshift({ text:'...',val: list[0].val - 1 });
+			                (this.current < this.page - count) && list.push({ text:'...',val: list[list.length - 1].val + 1 });
+			            }
+			            return list;
+			        }
+				},
+				filters:{
+					transfer:function(item){
+						return item.join(",");
+					}
+				}
+			});
+			$("img.lazy").lazyload({
+                effect : "fadeIn"
+            });
+		</script>
+        <%- include footer.ejs %>
+    </body>
+</html>

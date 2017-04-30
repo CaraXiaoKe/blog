@@ -174,7 +174,7 @@
                     offset: 1,
                     nodata: false
                 },
-                mounted(){
+                mounted:function(){
                     if(/(cate|subcate)\/(\d+)(\/(\d+))?/.exec(window.location.href)){
                         $("[data-id]").each(function(){
                             if($(this).data("id") == RegExp.$2){
