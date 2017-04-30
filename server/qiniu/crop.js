@@ -34,6 +34,7 @@ var putFile = function(req,res){
 		req.body.toCropImgX, 
 		req.body.toCropImgY
 	).autoOrient().write(filePath,function(err){
+		console.log(err);
 		var filename = toRandomName(req.files.file.originalFilename);//获取文件原名
 		var token = uptoken(bucket, filename );//转化token
 		var extra = new qiniu.io.PutExtra();

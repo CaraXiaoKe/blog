@@ -37,6 +37,7 @@
             var uyan_config = { 
                  'du':'92node.com'
             };
+            $("#editor").children('.ql-editor').attr("contenteditable",false);
         </script>
         <script src="http://v2.uyan.cc/code/uyan.js?uid=2130939"></script>
    		<% if(isMobile){ %>
@@ -74,7 +75,7 @@
 	                            window.sessionStorage.pm = JSON.stringify(pm);
 	                        }
 	                    })
-	                }
+	                };
 		        	$("#container").css("min-height",$(window).height()-$(".site-info-wrap").outerHeight());
 		            var bp = document.createElement('script');
 		            var curProtocol = window.location.protocol.split(':')[0];

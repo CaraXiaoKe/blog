@@ -6,3 +6,4 @@ server/config/
 server/dist/
 npm-debug.log
 server/logs/
+server/uploads/
