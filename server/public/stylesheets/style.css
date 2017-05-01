@@ -506,7 +506,7 @@ a{
 	float: left;
 	margin-left: -13rem;
 	width:13rem;
-	padding-top: 20px;
+	padding-top: 60px;
 	animation: returnZ 1s;
 	overflow: hidden;
 }
