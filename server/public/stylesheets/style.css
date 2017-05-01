@@ -848,6 +848,7 @@ a{
 	}
 	body[data-spm="0"] .g-content{
 		padding:0;
+		padding-top: 43px;
 	}
 	.u-message {
 		width:100%;

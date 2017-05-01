@@ -3,6 +3,12 @@
 		<div id="toolbar">
 			<button class="ql-bold" type="button">Bold</button>
 			<button class="ql-italic" type="button">Italic</button>
+			<select class="ql-header">
+				<option value="1">Heading</option>
+				<option value="2">Subheading</option>
+				<option value="3" selected>Noraml</option>
+				<option value="4">Smallheading</option>
+			</select>
 			<select class="ql-font">
 				<option selected=""></option>
 				<option value="serif"></option>
