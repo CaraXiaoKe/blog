@@ -23,11 +23,18 @@
                     	<%- post.post_html %>
                     </section>
         		</artilce>
-	            <div class="wrap">
-	                <!-- UY BEGIN -->
-	            	<div id="uyan_frame"></div>
-	            	<div class="uyan-mask-white" style=""></div>
-	            </div>
+        		<div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+                <script src="https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script>
+                <script>
+	                var cloudTieConfig = {
+	                  url: '', 
+	                  sourceId: "<%= post._id %>",
+	                  productKey: "82970b6cb4764d47814a6c9272b34ec8",
+	                  target: "cloud-tie-wrapper"
+	                };
+	                var yunManualLoad = true;
+	                Tie.loader("aHR0cHM6Ly9hcGkuZ2VudGllLjE2My5jb20vcGMvbGl2ZXNjcmlwdC5odG1s", true);
+                </script>
         	</div>
         </div>
         <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
@@ -39,7 +46,6 @@
             };
             $("#editor").children('.ql-editor').attr("contenteditable",false);
         </script>
-        <script src="http://v2.uyan.cc/code/uyan.js?uid=2130939"></script>
    		<% if(isMobile){ %>
 		<a href="/" class="home-back-box">
 			<i class="fa fa-home"></i>
